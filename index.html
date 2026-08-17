@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ===== ALL STYLES (compact, same as before) ===== */
+        /* ===== ALL STYLES (same as before – compact) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; color: #1e2a2e; background: #f0f4fa; }
         :root {
@@ -194,8 +194,6 @@
         .back-btn { background:none; border:none; font-size:1.5rem; cursor:pointer; color:#fff; width:36px; height:36px; border-radius:50%; transition:background 0.2s; }
         .back-btn:hover { background:rgba(255,255,255,0.15); }
         .nav-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
-        /* ensure modal status text uses proper styling */
-        .modal-status.error { color: #fa5252; }
     </style>
 </head>
 <body>
@@ -755,7 +753,6 @@ function addRandomFeed() {
 }
 
 // ==================== ERROR HANDLER ====================
-// Robust error text extractor – handles any shape of error response
 function errorText(data) {
     if (typeof data === 'string') return data;
     if (data && data.error) {
@@ -765,34 +762,47 @@ function errorText(data) {
     return 'Request failed';
 }
 
-// ==================== VERCEL API (REAL STK) ====================
+// ==================== VERCEL API (using test file's channel and endpoints) ====================
+const CHANNEL_ID = 'PAYL-MX4HSE';   // from your test file
 const STK_PUSH_URL = '/api/stk-push';
 const STATUS_URL = '/api/status';
 
+function normalizePhone(raw) {
+    let p = raw.replace(/\D/g, '');
+    if (p.startsWith('0')) p = '254' + p.slice(1);
+    if (!p.startsWith('254')) p = '254' + p;
+    return p;
+}
+
+// Send STK push with channelId
 async function sendSTKPush(phone, amount, reference) {
     const response = await fetch(STK_PUSH_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone, amount, reference })
+        body: JSON.stringify({
+            phone: normalizePhone(phone),
+            amount,
+            reference,
+            channelId: CHANNEL_ID
+        })
     });
     if (!response.ok) {
         let errorMsg = 'STK push request failed';
         try {
             const errorData = await response.json();
             errorMsg = errorText(errorData);
-        } catch (_) {
-            // if parsing fails, keep default
-        }
+        } catch (_) { /* ignore */ }
         throw new Error(errorMsg);
     }
     return response.json();
 }
 
-async function pollTransactionStatus(checkoutRequestID) {
+// Poll status using /api/status?id=...
+async function pollTransactionStatus(transactionId) {
     const start = Date.now();
     const timeout = 60000;
     while (Date.now() - start < timeout) {
-        const response = await fetch(`${STATUS_URL}?checkoutRequestID=${checkoutRequestID}`);
+        const response = await fetch(`${STATUS_URL}?id=${encodeURIComponent(transactionId)}`);
         if (!response.ok) {
             let errMsg = 'Status check failed';
             try {
@@ -802,10 +812,10 @@ async function pollTransactionStatus(checkoutRequestID) {
             throw new Error(errMsg);
         }
         const data = await response.json();
-        if (data.status === 'completed' || data.status === 'success') {
+        if (data.status === 'COMPLETED') {
             return data;
-        } else if (data.status === 'failed') {
-            throw new Error('Transaction failed');
+        } else if (data.status === 'FAILED' || data.status === 'CANCELLED') {
+            throw new Error('Payment ' + data.status.toLowerCase());
         }
         await new Promise(resolve => setTimeout(resolve, 2000));
     }
@@ -834,10 +844,10 @@ async function processDonationFee() {
 
     try {
         const result = await sendSTKPush(phone, amount, reference);
-        const checkoutRequestID = result.checkoutRequestID || result.transaction_id || result.reference;
-        if (!checkoutRequestID) throw new Error('No transaction ID returned');
+        const transactionId = result.transactionId || result.reference || result.transaction_id;
+        if (!transactionId) throw new Error('No transaction ID returned');
 
-        const statusData = await pollTransactionStatus(checkoutRequestID);
+        await pollTransactionStatus(transactionId);
         document.getElementById('stkWaitingOverlay').classList.remove('open');
         statusEl.className = 'modal-status show success';
         statusEl.textContent = '✅ Payment confirmed!';
@@ -906,10 +916,10 @@ async function processSupportFee() {
 
     try {
         const result = await sendSTKPush(phone, amount, reference);
-        const checkoutRequestID = result.checkoutRequestID || result.transaction_id || result.reference;
-        if (!checkoutRequestID) throw new Error('No transaction ID returned');
+        const transactionId = result.transactionId || result.reference || result.transaction_id;
+        if (!transactionId) throw new Error('No transaction ID returned');
 
-        const statusData = await pollTransactionStatus(checkoutRequestID);
+        await pollTransactionStatus(transactionId);
         document.getElementById('stkWaitingOverlay').classList.remove('open');
         statusEl.className = 'modal-status show success';
         statusEl.textContent = '✅ Payment confirmed!';
@@ -963,10 +973,10 @@ async function processReleaseContribution() {
 
     try {
         const result = await sendSTKPush(phone, amount, reference);
-        const checkoutRequestID = result.checkoutRequestID || result.transaction_id || result.reference;
-        if (!checkoutRequestID) throw new Error('No transaction ID returned');
+        const transactionId = result.transactionId || result.reference || result.transaction_id;
+        if (!transactionId) throw new Error('No transaction ID returned');
 
-        const statusData = await pollTransactionStatus(checkoutRequestID);
+        await pollTransactionStatus(transactionId);
         document.getElementById('stkWaitingOverlay').classList.remove('open');
         statusEl.className = 'modal-status show success';
         statusEl.textContent = '✅ Payment confirmed!';
@@ -1021,8 +1031,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('county').addEventListener('change', function() { validateCounty(this); });
 });
 
-console.log('🇰🇪 Mike Sonko Foundation — Real STK Integration (Fees: 350, 499, 700)');
-console.log('ℹ️ Error handling helper active – you\'ll see actual API error messages.');
+console.log('🇰🇪 Mike Sonko Foundation — Real STK Integration (using channel: ' + CHANNEL_ID + ')');
+console.log('📡 STK Push endpoint:', STK_PUSH_URL);
+console.log('📡 Status endpoint:', STATUS_URL);
 </script>
 </body>
 </html>
