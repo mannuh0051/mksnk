@@ -1,20 +1,20 @@
-// netlify/functions/status.js
-// Looks up a transaction's status by id. Called by the frontend while polling.
-// Usage: /.netlify/functions/status?id=<transactionId>
+// api/status.js
+// Vercel serverless function. Looks up a transaction's status by id.
+// Usage: /api/status?id=<transactionId>
 
-exports.handler = async (event) => {
-  if (event.httpMethod !== 'GET') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
+export default async function handler(req, res) {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const apiKey = process.env.PAYLOR_API_KEY;
   if (!apiKey) {
-    return { statusCode: 500, body: JSON.stringify({ error: 'PAYLOR_API_KEY is not configured' }) };
+    return res.status(500).json({ error: 'PAYLOR_API_KEY is not configured' });
   }
 
-  const id = event.queryStringParameters && event.queryStringParameters.id;
+  const { id } = req.query || {};
   if (!id) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Missing id query parameter' }) };
+    return res.status(400).json({ error: 'Missing id query parameter' });
   }
 
   try {
@@ -29,15 +29,8 @@ exports.handler = async (event) => {
     );
 
     const data = await response.json();
-
-    return {
-      statusCode: response.status,
-      body: JSON.stringify(data),
-    };
+    return res.status(response.status).json(data);
   } catch (err) {
-    return {
-      statusCode: 502,
-      body: JSON.stringify({ error: 'Failed to reach Paylor', detail: err.message }),
-    };
+    return res.status(502).json({ error: 'Failed to reach Paylor', detail: err.message });
   }
-};
+}
