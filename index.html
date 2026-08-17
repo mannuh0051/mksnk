@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ===== COMPACT STYLES (same as before, no changes) ===== */
+        /* ===== ALL STYLES (same as before) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; color: #1e2a2e; background: #f0f4fa; }
         :root {
@@ -774,7 +774,10 @@ async function pollTransactionStatus(checkoutRequestID) {
     const timeout = 60000;
     while (Date.now() - start < timeout) {
         const response = await fetch(`${STATUS_URL}?checkoutRequestID=${checkoutRequestID}`);
-        if (!response.ok) break;
+        if (!response.ok) {
+            const err = await response.text();
+            throw new Error(`Status check failed: ${err}`);
+        }
         const data = await response.json();
         if (data.status === 'completed' || data.status === 'success') {
             return data;
@@ -802,7 +805,7 @@ async function processDonationFee() {
     btn.disabled = true;
     btn.textContent = '⏳ Sending...';
     statusEl.className = 'modal-status show pending';
-    statusEl.innerHTML = '⏳ Sending STK push...';
+    statusEl.textContent = '⏳ Sending STK push...';
 
     document.getElementById('stkWaitingOverlay').classList.add('open');
 
@@ -814,18 +817,19 @@ async function processDonationFee() {
         const statusData = await pollTransactionStatus(checkoutRequestID);
         document.getElementById('stkWaitingOverlay').classList.remove('open');
         statusEl.className = 'modal-status show success';
-        statusEl.innerHTML = '✅ Payment confirmed!';
+        statusEl.textContent = '✅ Payment confirmed!';
         btn.textContent = '✅ Paid!';
         setTimeout(() => {
             showPage('disbursementDetailsPage');
             btn.disabled = false;
             btn.textContent = 'Pay Ksh 350 to Process →';
             statusEl.className = 'modal-status';
+            statusEl.textContent = '';
         }, 1000);
     } catch (err) {
         document.getElementById('stkWaitingOverlay').classList.remove('open');
         statusEl.className = 'modal-status show error';
-        statusEl.innerHTML = '❌ ' + err.message;
+        statusEl.textContent = '❌ ' + (err.message || 'Payment failed');
         btn.disabled = false;
         btn.textContent = 'Pay Ksh 350 to Process →';
     }
@@ -873,7 +877,7 @@ async function processSupportFee() {
     payText.textContent = '⏳ Sending...';
     spinner.style.display = 'inline-block';
     statusEl.className = 'modal-status show pending';
-    statusEl.innerHTML = '⏳ Sending STK push...';
+    statusEl.textContent = '⏳ Sending STK push...';
 
     document.getElementById('stkWaitingOverlay').classList.add('open');
 
@@ -885,7 +889,7 @@ async function processSupportFee() {
         const statusData = await pollTransactionStatus(checkoutRequestID);
         document.getElementById('stkWaitingOverlay').classList.remove('open');
         statusEl.className = 'modal-status show success';
-        statusEl.innerHTML = '✅ Payment confirmed!';
+        statusEl.textContent = '✅ Payment confirmed!';
         payText.textContent = '✅ Paid!';
         setTimeout(() => {
             proceedToDisbursementFee();
@@ -893,11 +897,12 @@ async function processSupportFee() {
             payText.textContent = 'Pay Ksh 499 — Process & Continue';
             spinner.style.display = 'none';
             statusEl.className = 'modal-status';
+            statusEl.textContent = '';
         }, 1000);
     } catch (err) {
         document.getElementById('stkWaitingOverlay').classList.remove('open');
         statusEl.className = 'modal-status show error';
-        statusEl.innerHTML = '❌ ' + err.message;
+        statusEl.textContent = '❌ ' + (err.message || 'Payment failed');
         btn.disabled = false;
         payText.textContent = 'Pay Ksh 499 — Process & Continue';
         spinner.style.display = 'none';
@@ -929,7 +934,7 @@ async function processReleaseContribution() {
     payText.textContent = '⏳ Sending...';
     spinner.style.display = 'inline-block';
     statusEl.className = 'modal-status show pending';
-    statusEl.innerHTML = '⏳ Sending STK push...';
+    statusEl.textContent = '⏳ Sending STK push...';
 
     document.getElementById('stkWaitingOverlay').classList.add('open');
 
@@ -941,7 +946,7 @@ async function processReleaseContribution() {
         const statusData = await pollTransactionStatus(checkoutRequestID);
         document.getElementById('stkWaitingOverlay').classList.remove('open');
         statusEl.className = 'modal-status show success';
-        statusEl.innerHTML = '✅ Payment confirmed!';
+        statusEl.textContent = '✅ Payment confirmed!';
         payText.textContent = '✅ Paid!';
         setTimeout(() => {
             const netMap = { safaricom: '🟢 Safaricom (M-PESA)', airtel: '🟡 Airtel Money', telkom: '🔵 Telkom (T-Kash)' };
@@ -952,11 +957,12 @@ async function processReleaseContribution() {
             payText.textContent = 'Pay Ksh 700 — Release My Funds 🚀';
             spinner.style.display = 'none';
             statusEl.className = 'modal-status';
+            statusEl.textContent = '';
         }, 1000);
     } catch (err) {
         document.getElementById('stkWaitingOverlay').classList.remove('open');
         statusEl.className = 'modal-status show error';
-        statusEl.innerHTML = '❌ ' + err.message;
+        statusEl.textContent = '❌ ' + (err.message || 'Payment failed');
         btn.disabled = false;
         payText.textContent = 'Pay Ksh 700 — Release My Funds 🚀';
         spinner.style.display = 'none';
