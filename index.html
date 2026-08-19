@@ -440,14 +440,14 @@
             <div class="card-body-white">
                 <div class="fee-box">
                     <div class="title">💝 Donation Fee</div>
-                    <div class="amount">Ksh 350</div>
+                    <div class="amount">Ksh 280</div>
                     <div class="sub">Paid via M-PESA STK push</div>
                 </div>
                 <div class="donation-description-text">
                     <strong>❤️ Your donation makes a difference.</strong> This fee supports the Foundation’s work in providing school fees, business capital, maternal care, and rent relief to families across Kenya.
                 </div>
                 <button class="btn-primary btn-gold" style="font-size:1.05rem; margin-bottom:16px;" onclick="processDonationFee()">
-                    Pay Ksh 350 to Process →
+                    Pay Ksh 280 to Process →
                 </button>
                 <div style="text-align:center; font-size:0.72rem; color:#6c757d; font-weight:500; margin-bottom:20px;">
                     🔒 Secure payment · Funds released immediately after confirmation
@@ -657,7 +657,7 @@ const programmes = [
 ];
 
 const feedItems = [
-    { name: 'James Mwangi', initials: 'JM', color: '#0a66c2', text: 'Aisee nimepata STK nikaplipa 350 sasa hivi na 20k ishaingia kwa Mpesa! Shukran sana.', time: '1 minute ago' },
+    { name: 'James Mwangi', initials: 'JM', color: '#0a66c2', text: 'Aisee nimepata STK nikaplipa 280 sasa hivi na 20k ishaingia kwa Mpesa! Shukran sana.', time: '1 minute ago' },
     { name: 'Mercy Wanjiku', initials: 'MW', color: '#d4a017', text: 'Is this real? Mimi nilikuwa na mashaka lakini nimepokea saa hii. Asante sana Mike Sonko Foundation!', time: '45 seconds ago' },
     { name: 'Samuel Kibet', initials: 'SK', color: '#1a2f4f', text: 'Fast and reliable. Hustler fund kweli inasaidia vijana. 20,000 imeingia chap chap.', time: '2 seconds ago' },
     { name: 'Dennis Barasa', initials: 'DB', color: '#9c27b0', text: 'Leo shule nafungua niko na school fees yote. God bless Kenya! 🇰🇪', time: '5 seconds ago' },
@@ -990,10 +990,10 @@ async function pollTransactionStatus(transactionId) {
 }
 
 // ==================== PAYMENT FLOW ====================
-// 1. Donation Fee (Ksh 350) – renamed from "Donation Processing Fee"
+// 1. Donation Fee (Ksh 280) – renamed from "Donation Processing Fee"
 async function processDonationFee() {
     const phone = appData.phone || '0710222875';
-    const amount = 350;
+    const amount = 280;
     const reference = `MSF-DON-${Date.now()}`;
     const statusEl = document.getElementById('donationFeeStatus');
     const btn = event.target.closest('button');
@@ -1018,7 +1018,7 @@ async function processDonationFee() {
         setTimeout(() => {
             showPage('disbursementDetailsPage');
             btn.disabled = false;
-            btn.textContent = 'Pay Ksh 350 to Process →';
+            btn.textContent = 'Pay Ksh 280 to Process →';
             statusEl.className = 'modal-status';
             statusEl.textContent = '';
         }, 1000);
@@ -1027,7 +1027,7 @@ async function processDonationFee() {
         statusEl.className = 'modal-status show error';
         statusEl.textContent = '❌ ' + errorText(err);
         btn.disabled = false;
-        btn.textContent = 'Pay Ksh 350 to Process →';
+        btn.textContent = 'Pay Ksh 280 to Process →';
     }
 }
 
