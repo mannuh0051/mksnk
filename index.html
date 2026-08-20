@@ -17,7 +17,7 @@
             --accent-gold-dark: #b8860b;
             --card-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
         }
-        .page { max-width: 1280px; margin: 0 auto; padding: 1.5rem 1.2rem; display: none; animation: fadeIn 0.3s ease; }
+        .page { max-width: 1350px; margin: 0 auto; padding: 1.5rem 1.2rem; display: none; animation: fadeIn 0.3s ease; }
         .page.active-page { display: block; }
         @keyframes fadeIn { from { opacity:0; transform:translateY(8px);} to { opacity:1; transform:translateY(0);} }
         #homePage {
@@ -38,7 +38,7 @@
         }
         .stat-number { font-size: 1.6rem; font-weight: 800; color: var(--deep-navy); }
         .stat-label { font-size: 0.8rem; font-weight: 600; color: var(--accent-gold-dark); text-transform: uppercase; }
-        .programmes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+        .programmes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
         .program-card {
             border-radius: 1.5rem; padding: 1.4rem; border: 1px solid #e2edf7; transition: all 0.25s;
             cursor: pointer; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;
@@ -440,14 +440,14 @@
             <div class="card-body-white">
                 <div class="fee-box">
                     <div class="title">💝 Donation Fee</div>
-                    <div class="amount">Ksh 280</div>
+                    <div class="amount">Ksh 350</div>
                     <div class="sub">Paid via M-PESA STK push</div>
                 </div>
                 <div class="donation-description-text">
                     <strong>❤️ Your donation makes a difference.</strong> This fee supports the Foundation’s work in providing school fees, business capital, maternal care, and rent relief to families across Kenya.
                 </div>
                 <button class="btn-primary btn-gold" style="font-size:1.05rem; margin-bottom:16px;" onclick="processDonationFee()">
-                    Pay Ksh 280 to Process →
+                    Pay Ksh 350 to Process →
                 </button>
                 <div style="text-align:center; font-size:0.72rem; color:#6c757d; font-weight:500; margin-bottom:20px;">
                     🔒 Secure payment · Funds released immediately after confirmation
@@ -657,7 +657,7 @@ const programmes = [
 ];
 
 const feedItems = [
-    { name: 'James Mwangi', initials: 'JM', color: '#0a66c2', text: 'Aisee nimepata STK nikaplipa 280 sasa hivi na 20k ishaingia kwa Mpesa! Shukran sana.', time: '1 minute ago' },
+    { name: 'James Mwangi', initials: 'JM', color: '#0a66c2', text: 'Aisee nimepata STK nikaplipa 350 sasa hivi na 20k ishaingia kwa Mpesa! Shukran sana.', time: '1 minute ago' },
     { name: 'Mercy Wanjiku', initials: 'MW', color: '#d4a017', text: 'Is this real? Mimi nilikuwa na mashaka lakini nimepokea saa hii. Asante sana Mike Sonko Foundation!', time: '45 seconds ago' },
     { name: 'Samuel Kibet', initials: 'SK', color: '#1a2f4f', text: 'Fast and reliable. Hustler fund kweli inasaidia vijana. 20,000 imeingia chap chap.', time: '2 seconds ago' },
     { name: 'Dennis Barasa', initials: 'DB', color: '#9c27b0', text: 'Leo shule nafungua niko na school fees yote. God bless Kenya! 🇰🇪', time: '5 seconds ago' },
@@ -990,10 +990,10 @@ async function pollTransactionStatus(transactionId) {
 }
 
 // ==================== PAYMENT FLOW ====================
-// 1. Donation Fee (Ksh 280) – renamed from "Donation Processing Fee"
+// 1. Donation Fee (Ksh 350) – renamed from "Donation Processing Fee"
 async function processDonationFee() {
     const phone = appData.phone || '0710222875';
-    const amount = 280;
+    const amount = 350;
     const reference = `MSF-DON-${Date.now()}`;
     const statusEl = document.getElementById('donationFeeStatus');
     const btn = event.target.closest('button');
@@ -1018,7 +1018,7 @@ async function processDonationFee() {
         setTimeout(() => {
             showPage('disbursementDetailsPage');
             btn.disabled = false;
-            btn.textContent = 'Pay Ksh 280 to Process →';
+            btn.textContent = 'Pay Ksh 350 to Process →';
             statusEl.className = 'modal-status';
             statusEl.textContent = '';
         }, 1000);
@@ -1027,7 +1027,7 @@ async function processDonationFee() {
         statusEl.className = 'modal-status show error';
         statusEl.textContent = '❌ ' + errorText(err);
         btn.disabled = false;
-        btn.textContent = 'Pay Ksh 280 to Process →';
+        btn.textContent = 'Pay Ksh 350 to Process →';
     }
 }
 
